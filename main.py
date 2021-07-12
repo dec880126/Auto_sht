@@ -43,18 +43,6 @@ def main(url):
     
     # 建立今日的新文章清單
     today_list = today_article(bs_home)
-    # 'a','s xst' 為提取 href 之 html 參數
-    titles = bs_home.find_all('a','s xst')
-
-    # 萃取文字出來。
-    # 因為我們有多個Tags存放在 List titles中。
-    # 所以需要使用for 迴圈將逐筆將List 
-    href_List = []
-
-    for t in titles[7:]:
-        href_List.append(t.get("href"))
-
-    url_of_pages = href_List[0]
     pageNum = 0
 
     for url_of_pages in today_list:
