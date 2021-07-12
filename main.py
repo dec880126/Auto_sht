@@ -1,6 +1,7 @@
 import requests 
 import bs4
 import os
+import time
 
 def main(url):    
     # 發送get 請求 到 sht
@@ -8,6 +9,7 @@ def main(url):
 
     # 把HTML 丟入 bs4模組分析
     bs_home = bs4.BeautifulSoup(response_of_home.text,"html.parser")
+    
     # 查找所有html 元素 過濾出 標籤名稱為 'div' 同時class為 title 
     titles = bs_home.find_all('a','s xst')
 
@@ -31,6 +33,7 @@ def main(url):
     os.system("pause")
 
 if __name__ == '__main__':
+    print(time.strftime("%Y-%m-(%d-1)", time.localtime()))
     while True:        
         URL_List = ["https://www.sehuatang.org/forum-36-1.html", "https://www.sehuatang.org/forum-37-1.html", "https://www.sehuatang.org/forum-2-1.html", "https://www.sehuatang.org/forum-38-1.html", "https://www.sehuatang.org/forum-103-1.html"]
         '''
@@ -49,8 +52,17 @@ if __name__ == '__main__':
         print("[*]                 5. 中文")
         print("[*]                 6. 結束程式")
         print('[*]===============================================')
-        typeChoose = int(input("選擇要抓取 Magnet 的版(1~5):"))
+        typeChoose = int(input("選擇要抓取 Magnet 的版(1~6):"))
+        # 處理輸入之 Exception
+        if typeChoose < 1 or typeChoose > 6:
+            print('[*]===============================================')
+            print("請重新輸入功能選單中之數字(1~6)...")
+            os.system("pause")
+            continue
+        # 結束程式
         if typeChoose == 6:
             break
         url_home = URL_List[typeChoose-1]
+        
+        # 開始抓取
         main(url_home)
