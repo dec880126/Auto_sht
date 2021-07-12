@@ -2,7 +2,11 @@ import requests
 import bs4
 import os
 import time
-
+'''
+ver 1.0
+-----update note-----
+ver 1.0 First varsion
+'''
 def main(url):    
     # 發送get 請求 到 sht
     response_of_home = requests.get(url)
