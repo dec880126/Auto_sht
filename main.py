@@ -51,8 +51,8 @@ def main(url):
         bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
         magnet = bs_pages.find('div','blockcode').get_text()
         # magnet_List.append(magnet.removesuffix('复制代码'))
-        print(str(pageNum) + ". " + magnet.removesuffix('复制代码'))
-    print("Magnet 已提取完畢" + "一共抓取了" + str(pageNum) + "個 magnet")
+        print("[*]" + str(pageNum) + ". " + magnet.removesuffix('复制代码'))
+    print("[*]Magnet 已提取完畢" + "一共抓取了" + str(pageNum) + "個 magnet")
     print('[*]===============================================')
     os.system("pause")
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         # 處理輸入之 Exception
         if typeChoose < 1 or typeChoose > 6:
             print('[*]===============================================')
-            print("請重新輸入功能選單中之數字(1~6)...")
+            print("[*]請重新輸入功能選單中之數字(1~6)...")
             os.system("pause")
             continue
 
@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
         url_home = URL_List[typeChoose-1]
         print('[*]===============================================')
-        print("以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 magnet 提取:")
+        print("[*]以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 magnet 提取:")
         
         # 開始抓取
         main(url_home)
