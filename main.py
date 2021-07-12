@@ -5,10 +5,10 @@ import time
 
 version = "1.1.5"
 # update note
-'''
+"""
 ver 1.0 First varsion
 ver 1.1 新增挑出當日更新文章功能
-'''
+"""
 
 def today_article(soup):
     """
