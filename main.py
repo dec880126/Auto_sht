@@ -14,8 +14,7 @@ def today_article(soup):
     """
     rtype: list
     """
-    # today = str(time.strftime("%Y-%m-%d", time.localtime()))
-    today = '2021-07-12'
+    today = str(time.strftime("%Y-%m-%d", time.localtime()))
     tbody = soup.find_all('tbody')
     today_list = [] # 存放文章代碼之 list
 
@@ -92,17 +91,21 @@ if __name__ == '__main__':
         print('[*]===============================================')
         typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
         typeChoose = int(input("選擇要抓取 Magnet 的版(1~6):"))
+
         # 處理輸入之 Exception
         if typeChoose < 1 or typeChoose > 6:
             print('[*]===============================================')
             print("請重新輸入功能選單中之數字(1~6)...")
             os.system("pause")
             continue
+
         # 結束程式
         if typeChoose == 6:
             break
+
         url_home = URL_List[typeChoose-1]
         print('[*]===============================================')
-        print("以下為 " + "2021-07-12" + " " + str(typeList[typeChoose-1]) + " 區的 magnet 提取:")
+        print("以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 magnet 提取:")
+        
         # 開始抓取
         main(url_home)
