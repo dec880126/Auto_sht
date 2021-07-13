@@ -8,9 +8,11 @@ version = "1.3.1"
 class movie():
     def __init__(self) -> None:
         pass
+    
 
 def today_article(soup):
     """
+    You can change the date to whenever you want
     rtype: list
     """
     # change the date to extract the data if you want
@@ -31,7 +33,12 @@ def today_article(soup):
             continue          
     return today_list   # List of article_Code
 
+
 def get_title(today_list):
+    """
+    Read the article_Code and print all title that correspond to the parameter "today"
+    type today_list: list (article_Code)
+    """
     titleNum = 0
     for article_Code in today_list:
         titleNum += 1
@@ -46,6 +53,7 @@ def get_title(today_list):
 
 def get_magnet(today_list):
     """
+    Read the article_Code and print all magnet that correspond to the parameter "today"
     type today_list: list
     rtype: None
     """            
@@ -62,8 +70,10 @@ def get_magnet(today_list):
     print('[*]===============================================')
     os.system("pause")
 
+
 def get_pic_urlList(today_list):
     """
+    Read the article_Code and print all URL of picture that correspond to the parameter "today"
     type today_list: list
     rtype: None
     """            
@@ -81,8 +91,8 @@ def get_pic_urlList(today_list):
     print('[*]===============================================')
     os.system("pause")
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     while True:        
         URL_List = ["https://www.sehuatang.org/forum-36-1.html", "https://www.sehuatang.org/forum-37-1.html", "https://www.sehuatang.org/forum-2-1.html", "https://www.sehuatang.org/forum-38-1.html", "https://www.sehuatang.org/forum-103-1.html"]
         '''
