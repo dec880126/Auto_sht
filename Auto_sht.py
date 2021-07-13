@@ -5,13 +5,6 @@ import time
 import tkinter as tk
 
 version = "1.3.1"
-# update note
-"""
-ver 1.0 First version 可提取 magnet 之 sehuatang 輔助程式
-ver 1.1 新增挑出當日更新文章功能
-ver 1.2 新增提取文章標題功能
-ver 1.3 新增預覽圖連結提取功能
-"""
 
 def today_article(soup):
     """
