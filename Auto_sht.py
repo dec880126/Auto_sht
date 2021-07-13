@@ -4,12 +4,13 @@ import os
 import time
 import tkinter as tk
 
-version = "1.2.1"
+version = "1.3.1"
 # update note
 """
-ver 1.0 First version
+ver 1.0 First version 可提取 magnet 之 sehuatang 輔助程式
 ver 1.1 新增挑出當日更新文章功能
 ver 1.2 新增提取文章標題功能
+ver 1.3 新增預覽圖連結提取功能
 """
 
 def today_article(soup):
@@ -63,6 +64,25 @@ def get_magnet(today_list):
     print('[*]===============================================')
     os.system("pause")
 
+def get_pic_urlList(today_list):
+    """
+    type today_list: list
+    rtype: None
+    """            
+    pageNum = 0
+
+    for article_Code in today_list:
+        pageNum += 1
+        response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
+        soup = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
+        img_block = soup.find_all('ignore_js_op')
+        for block in img_block[:-1]:
+            pic_link = block.find('img').get('file')
+            print(pic_link)
+    print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(pageNum) + "個 Pic URL")
+    print('[*]===============================================')
+    os.system("pause")
+
 if __name__ == '__main__':
 
     while True:        
@@ -98,11 +118,13 @@ if __name__ == '__main__':
         if typeChoose == 6:
             break        
 
-        extractChoose = input("選擇要抓取的種類(標題:t, 磁力:m):")        
+        extractChoose = input("選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
         if extractChoose == 't':
             extractChoose_mean = 'title'
         elif extractChoose == 'm':
             extractChoose_mean = 'magnet'
+        elif extractChoose == 'p':
+            extractChoose_mean = 'picture'
         else:
             print("Error of extractChoose")        
 
@@ -125,6 +147,8 @@ if __name__ == '__main__':
             get_title(today_list)
         elif extractChoose == 'm':
             get_magnet(today_list)
+        elif extractChoose == 'p':
+            get_pic_urlList(today_list)
         else:
             print("[*]請重新輸入功能...")
             os.system("pause")
