@@ -2,6 +2,7 @@ import requests
 import bs4
 import os
 import time
+import tkinter as tk
 
 version = "1.1.5"
 # update note
@@ -30,7 +31,7 @@ def today_article(soup):
             continue          
     return today_list
 
-def main(url):
+def get_magnet(url):
     """
     type url: str
     rtype: None
@@ -57,6 +58,7 @@ def main(url):
     os.system("pause")
 
 if __name__ == '__main__':
+
     while True:        
         URL_List = ["https://www.sehuatang.org/forum-36-1.html", "https://www.sehuatang.org/forum-37-1.html", "https://www.sehuatang.org/forum-2-1.html", "https://www.sehuatang.org/forum-38-1.html", "https://www.sehuatang.org/forum-103-1.html"]
         '''
@@ -96,4 +98,4 @@ if __name__ == '__main__':
         print("[*]以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 magnet 提取:")
         
         # 開始抓取
-        main(url_home)
+        get_magnet(url_home)
