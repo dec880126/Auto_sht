@@ -5,15 +5,21 @@ import time
 
 version = "1.3.1"
 
+class movie():
+    def __init__(self) -> None:
+        pass
+
 def today_article(soup):
     """
     rtype: list
     """
+    # change the date to extract the data if you want
+    # today = yyyy-mm-dd
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
     tbody = soup.find_all('tbody')
-    today_list = [] # 存放文章代碼之 list
+    today_list = [] # list of "article code"
 
-    # 提取文章代碼
+    # extract article code
     for x in tbody:
         date = x.find('span', attrs={'title':today})
         if date != None:
@@ -99,14 +105,14 @@ if __name__ == '__main__':
         print('[*]===============================================')
         typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
         typeChoose = int(input("請選擇功能(1~6):"))
-        # 處理輸入之 Exception
+        # Exception
         if typeChoose < 1 or typeChoose > 6:
             print('[*]===============================================')
             print("[*]請重新輸入功能選單中之數字(1~6)...")
             os.system("pause")
             continue
 
-        # 結束程式
+        # Finish
         if typeChoose == 6:
             break        
 
@@ -120,21 +126,21 @@ if __name__ == '__main__':
         else:
             print("Error of extractChoose")        
 
-        # 選擇分區
+        # choose url_home
         url_home = URL_List[typeChoose-1]
         print('[*]===============================================')
         print("[*]以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
         
-        # 發送get 請求 到 sht
+        # request to sehuatang
         response_of_home = requests.get(url_home)
 
-        # 把HTML 丟入 bs4模組分析
+        # bs4 analysis
         bs_home = bs4.BeautifulSoup(response_of_home.text,"html.parser")
         
-        # 建立今日的新文章清單
+        # make the list of article that published today
         today_list = today_article(bs_home)
 
-        # 開始抓取
+        # start to extract
         if extractChoose == 't':
             get_title(today_list)
         elif extractChoose == 'm':
@@ -146,4 +152,3 @@ if __name__ == '__main__':
             os.system("pause")
             continue
         continue
-        
