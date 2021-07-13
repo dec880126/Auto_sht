@@ -16,7 +16,7 @@ def today_article(soup):
     rtype: list
     """
     # change the date to extract the data if you want
-    # today = yyyy-mm-dd
+    # today = "yyyy-mm-dd"
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
     tbody = soup.find_all('tbody')
     today_list = [] # list of "article code"
