@@ -12,5 +12,4 @@ import requests
 import bs4
 import os
 import time
-import tkinter as tk
 ```
