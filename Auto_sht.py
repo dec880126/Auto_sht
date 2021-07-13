@@ -7,7 +7,7 @@ import tkinter as tk
 version = "1.1.5"
 # update note
 """
-ver 1.0 First vrsion
+ver 1.0 First version
 ver 1.1 新增挑出當日更新文章功能
 ver 1.2 新增提取文章標題功能
 """
