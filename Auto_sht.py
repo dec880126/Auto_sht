@@ -4,7 +4,7 @@ import os
 import time
 import tkinter as tk
 
-version = "1.1.5"
+version = "1.2.1"
 # update note
 """
 ver 1.0 First version
