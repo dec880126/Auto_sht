@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 1.6.1
+>Current version: ver 1.6.2
 
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
