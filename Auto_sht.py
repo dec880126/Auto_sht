@@ -3,12 +3,7 @@ import bs4
 import os
 import time
 
-version = "1.3.1"
-
-class movie():
-    def __init__(self) -> None:
-        pass
-
+version = "1.3.2"
 
 def today_article(soup):
     """
@@ -16,9 +11,7 @@ def today_article(soup):
 
     rtype: list
     """
-    # change the date to extract the data if you want
-    # today = "2021-07-14"
-    today = str(time.strftime("%Y-%m-%d", time.localtime()))
+    # change the date to extract the data if you want    
     tbody = soup.find_all('tbody')
     today_list = [] # list of "article code"
 
@@ -97,6 +90,7 @@ def get_pic_urlList(today_list):
 
 
 if __name__ == '__main__':
+    today_set = False
     while True:        
         URL_List = [36, 37, 2, 38, 103]
         '''
@@ -116,11 +110,12 @@ if __name__ == '__main__':
         print("[*]                 4. 歐美")
         print("[*]                 5. 中文")
         print("[*]                 6. 結束程式")
+        print("[*]                 7. 修改日期")
         print('[*]===============================================')
         typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
         typeChoose = int(input("請選擇功能(1~6):"))
         # Exception
-        if typeChoose < 1 or typeChoose > 6:
+        if typeChoose < 1 or typeChoose > 7:
             print('[*]===============================================')
             print("[*]請重新輸入功能選單中之數字(1~6)...")
             os.system("pause")
@@ -130,6 +125,13 @@ if __name__ == '__main__':
         if typeChoose == 6:
             break        
 
+        # Change date
+        if typeChoose == 7:
+            print("[*]請問日期要更改為?")
+            print("""[*]  !!注意!!  :  "-"號是必要的""")
+            today = input("(YYYY-MM-DD):")
+            continue        
+        
         extractChoose = input("選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
         if extractChoose == 't':
             extractChoose_mean = 'title'
@@ -138,12 +140,26 @@ if __name__ == '__main__':
         elif extractChoose == 'p':
             extractChoose_mean = 'picture'
         else:
-            print("Error of extractChoose")        
+            print("Error of extractChoose")
+
+        # Choose Date        
+        while not(today_set):
+            today_or_not = input("[*]要抓取的是今天的資料嗎?(y/n):")
+            if today_or_not == "y":
+                today = str(time.strftime("%Y-%m-%d", time.localtime()))
+                today_set = True
+            elif today_or_not == "n":
+                print("[*]請問要抓取的日期是?")
+                print("""[*]  !!注意!!  :  "-"號是必要的""")
+                today = input("(YYYY-MM-DD):")
+                today_set = True
+
 
         # choose url_home
-        url_home = "https://www.sehuatang.org/forum-" + str(URL_List[typeChoose-1]) + "-1.html"
+        url_pageNum_of_home = 1
+        url_home = "https://www.sehuatang.org/forum-" + str(URL_List[typeChoose-1]) + "-" + str(url_pageNum_of_home) + ".html"        
         print('[*]===============================================')
-        print("[*]以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
+        print("[*]以下為 " + str(today) + " " + str(typeList[typeChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
         
         # request to sehuatang
         response_of_home = requests.get(url_home)
