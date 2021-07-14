@@ -3,7 +3,7 @@ import bs4
 import os
 import time
 
-version = "1.5.1"
+version = "1.5.2"
 
 def today_article(soup):
     """
@@ -84,8 +84,9 @@ def get_pic_urlList(today_list):
         img_block = soup.find_all('ignore_js_op')
         for block in img_block[:-1]:
             pic_link = block.find('img').get('file')
-            print(pic_link)
-            pic_link_List.append(pic_link)
+            if pic_link != None:
+                print(pic_link)
+                pic_link_List.append(pic_link)
     print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(pageNum) + "個 Pic URL")    
     make_html(pic_link_List, "Pic_URL.html")
     print("[*]Pic_URL.html 產生成功!")
@@ -103,7 +104,7 @@ def make_html(input_list, fileName):
 
     for url in input_list:
         if url != "None":
-            f.write("<img src = " + str(url) + """ width="1200" height="807">""")
+            f.write("<img src = " + url + """ width="1200" height="807">""")
 
     f.write("    </body></html>")
     f.close()
