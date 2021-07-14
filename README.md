@@ -25,10 +25,10 @@ import time
 	3. click the `auto_sht.bat`
 
 - By Python Compiler
-> Windows User
-	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is
+> Windows User<br>
+	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is<br>
 	2. type the command `python .\auto_sht.py`
 
-> Mac OS User
-	1. Open the Terminal at the folder where `auto_sht.py` is
+> Mac OS User<br>
+	1. Open the Terminal at the folder where `auto_sht.py` is<br>
 	2. type the command `python .\auto_sht.py`
