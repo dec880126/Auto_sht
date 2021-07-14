@@ -36,7 +36,7 @@ import bs4
 |ver 1.5.0  |新增: 圖片預覽 HTML file 產生功能
 |ver 1.5.1  |Optimization and Bug fixes
 |ver 1.5.2  |Optimization and Bug fixes
-|ver 1.5.3  |Optimization and Bug fixes
+|ver 1.5.3  |新增: 抓取進度條功能
 
 
 *預計新增: 挑選功能*
