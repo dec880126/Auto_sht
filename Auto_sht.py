@@ -8,15 +8,16 @@ version = "1.3.1"
 class movie():
     def __init__(self) -> None:
         pass
-    
+
 
 def today_article(soup):
     """
     You can change the date to whenever you want
+
     rtype: list
     """
     # change the date to extract the data if you want
-    # today = "yyyy-mm-dd"
+    # today = "2021-07-13"
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
     tbody = soup.find_all('tbody')
     today_list = [] # list of "article code"
@@ -37,6 +38,7 @@ def today_article(soup):
 def get_title(today_list):
     """
     Read the article_Code and print all title that correspond to the parameter "today"
+
     type today_list: list (article_Code)
     """
     titleNum = 0
@@ -54,6 +56,7 @@ def get_title(today_list):
 def get_magnet(today_list):
     """
     Read the article_Code and print all magnet that correspond to the parameter "today"
+
     type today_list: list
     rtype: None
     """            
@@ -74,6 +77,7 @@ def get_magnet(today_list):
 def get_pic_urlList(today_list):
     """
     Read the article_Code and print all URL of picture that correspond to the parameter "today"
+    
     type today_list: list
     rtype: None
     """            
