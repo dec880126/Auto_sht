@@ -3,7 +3,7 @@ import bs4
 import os
 import time
 
-version = "1.3.2"
+version = "1.5.0"
 
 def today_article(soup):
     """
@@ -75,7 +75,8 @@ def get_pic_urlList(today_list):
     rtype: None
     """            
     pageNum = 0
-
+    pic_link_List = []
+    print("[*]Pic_URL.html 產生中...")
     for article_Code in today_list:
         pageNum += 1
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
@@ -84,10 +85,29 @@ def get_pic_urlList(today_list):
         for block in img_block[:-1]:
             pic_link = block.find('img').get('file')
             print(pic_link)
-    print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(pageNum) + "個 Pic URL")
+            pic_link_List.append(pic_link)
+    print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(pageNum) + "個 Pic URL")    
+    make_html(pic_link_List, "Pic_URL.html")
+    print("[*]Pic_URL.html 產生成功!")
     print('[*]===============================================')
     os.system("pause")
 
+def make_html(input_list, fileName):
+    '''
+    Read the url in the input_list, and make the HTML file
+    type input_list: list
+    '''
+    path = "./" + fileName
+    f = open(path, 'w')
+    f.write("<!doctype html><html>    <head>        <title>Auto SHT ! </title>    </head>    <body>")
+
+    for url in input_list:
+        if url != "None":
+            f.write("<img src = " + url + """ width="1200" height="807">""")
+
+    f.write("    </body></html>")
+    f.close()
+    
 
 if __name__ == '__main__':
     today_set = False
