@@ -15,8 +15,6 @@
 ```
 import requests 
 import bs4
-import os
-import time
 ```
 ## How to use?
 - By .bat
