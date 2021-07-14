@@ -264,4 +264,3 @@ if __name__ == '__main__':
             print("[*]請重新輸入功能...")
             os.system("pause")
             continue
-        continue
