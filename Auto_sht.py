@@ -1,10 +1,13 @@
-import requests 
-import bs4
 import os
 import time
 import sys
 
-version = "1.6.1"
+# Necessary Modules
+import requests 
+import bs4
+import datetime
+
+version = "1.6.2"
 
 def today_article(home_code):
     """
@@ -121,8 +124,7 @@ def get_pic_urlList(today_list):
     progress_bar(100, over = True)
 
     print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(picNum) + "個 Pic URL")    
-    make_html(pic_link_List, "Auto_SHT_Pic.html")
-    print("[*]Auto_SHT_Pic.html 產生成功!")
+    make_html(pic_link_List, "Auto_SHT_Pic.html")    
     print('[*]===============================================')
     os.system("pause")
 
@@ -135,7 +137,7 @@ def make_html(input_list, fileName):
     '''
     path = "./" + fileName
 
-    print("[/]Auto_SHT_Pic.html 產生中...")
+    print(f"[/]{fileName} 產生中...")
     f = open(path, 'w')
     f.write("<!doctype html><html><head><title>Auto SHT !</title></head><body>")
 
@@ -146,7 +148,7 @@ def make_html(input_list, fileName):
 
     f.write("</body></html>")
     f.close()
-    print(f"[*]檔案路徑: {os.getcwd()}\{path[2:]}")
+    print(f"[*]{fileName} 產生成功! -> 檔案路徑: {os.getcwd()}\{path[2:]}")
 
 
 def progress_bar(progress_Now, over = False):# 1~101
@@ -176,6 +178,12 @@ def clearConsole():
         command = 'cls'
     os.system(command)
 
+
+def getYesterday(how_many_day_pre): 
+    today=datetime.date.today() 
+    oneday=datetime.timedelta(days=how_many_day_pre) 
+    yesterday=today-oneday  
+    return yesterday
 
 if __name__ == '__main__':
     today_set = False
@@ -220,8 +228,11 @@ if __name__ == '__main__':
         # Change date
         if typeChoose == 7:
             print("[*]請問日期要更改為?")
+            print(f"[*](昨天: -1, 前天: -2...)")
             print("""[*]  !!注意!!  :  "-"號是必要的""")
             today = input("[?](YYYY-MM-DD):")
+            if int(today) < 0 and int(today) > -4:
+                    today = getYesterday(abs(int(today)))
             continue        
         
         extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
@@ -236,14 +247,17 @@ if __name__ == '__main__':
 
         # Choose Date        
         while not(today_set):
-            today_or_not = input("[?]要抓取的是今天的資料嗎?(y/n):")
+            today_or_not = input("[?]要抓取的是今天的資料嗎? (y/n):")
             if today_or_not == "y" or today_or_not == "Y":
                 today = str(time.strftime("%Y-%m-%d", time.localtime()))
                 today_set = True
             elif today_or_not == "n" or today_or_not == "N":
                 print("[?]請問要抓取的日期是?")
+                print(f"[*](昨天: -1, 前天: -2...)")
                 print("""[*]  !!注意!!  :  "-"號是必要的""")
                 today = input("(YYYY-MM-DD):")
+                if int(today) < 0 and int(today) > -4:
+                    today = getYesterday(abs(int(today)))
                 today_set = True
 
         home_code = URL_List[typeChoose-1]       
