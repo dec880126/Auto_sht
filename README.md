@@ -14,7 +14,7 @@ import datetime
 ## How to use?
 - By .bat
 	1. Download the latest release
-	2. Open the zip
+	2. UNZIP
 	3. click the `auto_sht.bat`
 
 - By Python Compiler
