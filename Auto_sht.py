@@ -3,7 +3,7 @@ import bs4
 import os
 import time
 
-version = "1.5.0"
+version = "1.5.1"
 
 def today_article(soup):
     """
@@ -103,7 +103,7 @@ def make_html(input_list, fileName):
 
     for url in input_list:
         if url != "None":
-            f.write("<img src = " + url + """ width="1200" height="807">""")
+            f.write("<img src = " + str(url) + """ width="1200" height="807">""")
 
     f.write("    </body></html>")
     f.close()
@@ -153,11 +153,11 @@ if __name__ == '__main__':
             continue        
         
         extractChoose = input("選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
-        if extractChoose == 't':
+        if extractChoose == 't' or extractChoose == 'T':
             extractChoose_mean = 'title'
-        elif extractChoose == 'm':
+        elif extractChoose == 'm' or extractChoose == 'M':
             extractChoose_mean = 'magnet'
-        elif extractChoose == 'p':
+        elif extractChoose == 'p' or extractChoose == 'P':
             extractChoose_mean = 'picture'
         else:
             print("Error of extractChoose")
@@ -165,10 +165,10 @@ if __name__ == '__main__':
         # Choose Date        
         while not(today_set):
             today_or_not = input("[*]要抓取的是今天的資料嗎?(y/n):")
-            if today_or_not == "y":
+            if today_or_not == "y" or today_or_not == "Y":
                 today = str(time.strftime("%Y-%m-%d", time.localtime()))
                 today_set = True
-            elif today_or_not == "n":
+            elif today_or_not == "n" or today_or_not == "N":
                 print("[*]請問要抓取的日期是?")
                 print("""[*]  !!注意!!  :  "-"號是必要的""")
                 today = input("(YYYY-MM-DD):")
@@ -191,11 +191,11 @@ if __name__ == '__main__':
         today_list = today_article(bs_home)
 
         # start to extract
-        if extractChoose == 't':
+        if extractChoose_mean == 'title':
             get_title(today_list)
-        elif extractChoose == 'm':
+        elif extractChoose_mean == 'magnet':
             get_magnet(today_list)
-        elif extractChoose == 'p':
+        elif extractChoose_mean == 'picture':
             get_pic_urlList(today_list)
         else:
             print("[*]請重新輸入功能...")
