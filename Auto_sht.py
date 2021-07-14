@@ -4,7 +4,7 @@ import os
 import time
 import sys
 
-version = "1.5.4"
+version = "1.6.0"
 
 def today_article(home_code):
     """
