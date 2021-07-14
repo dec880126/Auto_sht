@@ -1,5 +1,5 @@
 # Auto SHT
-Current version: ver 1.5.1
+Current version: ver 1.5.2
 
 ## Necessary modules
 ```
