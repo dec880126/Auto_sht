@@ -1,6 +1,6 @@
 <h1 align="center">Auto SHT</h1>
 
-To simplify the work of browsing sehuatang.org
+To simplify the work for browsing sehuatang.org
 >Current version: ver 1.5.3
 
 ## Necessary modules
