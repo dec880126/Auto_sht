@@ -2,8 +2,9 @@ import requests
 import bs4
 import os
 import time
+import sys
 
-version = "1.5.2"
+version = "1.5.3"
 
 def today_article(soup):
     """
@@ -35,12 +36,21 @@ def get_title(today_list):
     type today_list: list (article_Code)
     """
     titleNum = 0
-    for article_Code in today_list:
+    title_list = []
+
+    print("[*]Title 提取中...")
+    for article_Code in today_list:        
         titleNum += 1
+        progress_bar(int(titleNum/30*100))
         response_of_article = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         bs_article = bs4.BeautifulSoup(response_of_article.text,"html.parser")
         title = bs_article.find('span', attrs={'id' : 'thread_subject'}).get_text()
-        print("[*]" + title)
+        title_list.append(title)
+    progress_bar(100)
+
+    for t in title_list:
+        print("[*]" + t)
+
     print("[*]Title 已提取完畢" + "一共抓取了" + str(titleNum) + "個 title")
     print('[*]===============================================')
     os.system("pause")
@@ -53,15 +63,21 @@ def get_magnet(today_list):
     type today_list: list
     rtype: None
     """            
-    pageNum = 0
+    magNum = 0
+    magnet_List = []
 
+    print("[*]Magnet 提取中...")
     for article_Code in today_list:
-        pageNum += 1
+        magNum += 1
+        progress_bar(int(magNum/30*100))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
         magnet = bs_pages.find('div','blockcode').get_text()
-        # magnet_List.append(magnet.removesuffix('复制代码'))
-        print("[*]" + str(pageNum) + ". " + magnet.removesuffix('复制代码'))
+        magnet_List.append(magnet.removesuffix('复制代码'))
+    progress_bar(100)
+
+    for mag in magnet_List:
+        print(mag)
     print("[*]Magnet 已提取完畢" + "一共抓取了" + str(pageNum) + "個 magnet")
     print('[*]===============================================')
     os.system("pause")
@@ -74,20 +90,23 @@ def get_pic_urlList(today_list):
     type today_list: list
     rtype: None
     """            
-    pageNum = 0
+    picNum = 0
     pic_link_List = []
+
     print("[*]Pic_URL.html 產生中...")
-    for article_Code in today_list:
-        pageNum += 1
+    for article_Code in today_list:        
+        progress_bar(int(picNum/60*100))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         soup = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
         img_block = soup.find_all('ignore_js_op')
         for block in img_block[:-1]:
+            picNum += 1            
             pic_link = block.find('img').get('file')
             if pic_link != None:
-                print(pic_link)
-                pic_link_List.append(pic_link)
-    print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(pageNum) + "個 Pic URL")    
+                pic_link_List.append(pic_link)        
+    progress_bar(100, True)
+
+    print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(picNum) + "個 Pic URL")    
     make_html(pic_link_List, "Pic_URL.html")
     print("[*]Pic_URL.html 產生成功!")
     print('[*]===============================================')
@@ -108,7 +127,24 @@ def make_html(input_list, fileName):
 
     f.write("    </body></html>")
     f.close()
+
+
+def progress_bar(progress_Now, over = False):# 1~101
+    if progress_Now > 99:
+        if progress_Now == 100:
+            print("\r",end="")
+            print("[/]Download progress: {}%: ".format(progress_Now),"▋" * (progress_Now // 2),end="")
+            sys.stdout.flush()
+        progress_Now = 99
+    if over:
+        print("")
+    else:
+        print("\r",end="")
+        print("[/]Download progress: {}%: ".format(progress_Now),"▋" * (progress_Now // 2),end="")
+        sys.stdout.flush()
+        time.sleep(0.05)
     
+
 
 if __name__ == '__main__':
     today_set = False
