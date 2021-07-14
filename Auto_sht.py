@@ -4,49 +4,62 @@ import os
 import time
 import sys
 
-version = "1.5.3"
+version = "1.5.4"
 
-def today_article(soup):
+def today_article(home_code):
     """
     You can change the date to whenever you want
-
     rtype: list
     """
-    # change the date to extract the data if you want    
-    tbody = soup.find_all('tbody')
-    today_list = [] # list of "article code"
+    print("[/]正在獲取本日文章清單...")
 
-    # extract article code
-    for x in tbody:
-        date = x.find('span', attrs={'title':today})
-        if date != None:
-            if date.get('title') != today:
+    # list of "article code"
+    today_list = []
+
+    for url_pageNum_of_home in range(1, 6):
+        # choose home_code
+        url_home = "https://www.sehuatang.org/forum-" + str(home_code) + "-" + str(url_pageNum_of_home) + ".html"        
+        
+        # request to sehuatang
+        response_of_home = requests.get(url_home)
+
+        # bs4 analysis
+        bs_home = bs4.BeautifulSoup(response_of_home.text,"html.parser")
+
+        # change the date to extract the data if you want    
+        tbody = bs_home.find_all('tbody')
+
+        # extract article code
+        for x in tbody:
+            date = x.find('span', attrs={'title':today})
+            if date == None:
                 continue
             id = x.get('id')
             if "normalthread" in str(id):
                 today_list.append(id[-6:])      # extract article_Code
-            continue          
+            continue     
+        url_pageNum_of_home += 1
+    print("[*]本日文章清單獲取完成!")
     return today_list   # List of article_Code
 
 
 def get_title(today_list):
     """
     Read the article_Code and print all title that correspond to the parameter "today"
-
     type today_list: list (article_Code)
     """
     titleNum = 0
     title_list = []
 
-    print("[*]Title 提取中...")
+    print("[/]Title 提取中...")
     for article_Code in today_list:        
         titleNum += 1
-        progress_bar(int(titleNum/30*100))
+        progress_bar(int(titleNum/30*99))
         response_of_article = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         bs_article = bs4.BeautifulSoup(response_of_article.text,"html.parser")
         title = bs_article.find('span', attrs={'id' : 'thread_subject'}).get_text()
         title_list.append(title)
-    progress_bar(100)
+    progress_bar(100, over = True)
 
     for t in title_list:
         print("[*]" + t)
@@ -59,26 +72,25 @@ def get_title(today_list):
 def get_magnet(today_list):
     """
     Read the article_Code and print all magnet that correspond to the parameter "today"
-
     type today_list: list
     rtype: None
     """            
     magNum = 0
     magnet_List = []
 
-    print("[*]Magnet 提取中...")
+    print("[/]Magnet 提取中...")
     for article_Code in today_list:
         magNum += 1
-        progress_bar(int(magNum/30*100))
+        progress_bar(int(magNum/30*99))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
         magnet = bs_pages.find('div','blockcode').get_text()
         magnet_List.append(magnet.removesuffix('复制代码'))
-    progress_bar(100)
+    progress_bar(100, over = True)
 
     for mag in magnet_List:
         print(mag)
-    print("[*]Magnet 已提取完畢" + "一共抓取了" + str(pageNum) + "個 magnet")
+    print("[*]Magnet 已提取完畢" + "一共抓取了" + str(magNum) + "個 magnet")
     print('[*]===============================================')
     os.system("pause")
 
@@ -93,9 +105,9 @@ def get_pic_urlList(today_list):
     picNum = 0
     pic_link_List = []
 
-    print("[*]Pic_URL.html 產生中...")
+    print("[/]Pic_URL.html 產生中...")
     for article_Code in today_list:        
-        progress_bar(int(picNum/60*100))
+        progress_bar(int(picNum/60*99))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         soup = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
         img_block = soup.find_all('ignore_js_op')
@@ -104,7 +116,7 @@ def get_pic_urlList(today_list):
             pic_link = block.find('img').get('file')
             if pic_link != None:
                 pic_link_List.append(pic_link)        
-    progress_bar(100, True)
+    progress_bar(100, over = True)
 
     print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(picNum) + "個 Pic URL")    
     make_html(pic_link_List, "Pic_URL.html")
@@ -134,8 +146,8 @@ def progress_bar(progress_Now, over = False):# 1~101
         if progress_Now == 100:
             print("\r",end="")
             print("[/]Download progress: {}%: ".format(progress_Now),"▋" * (progress_Now // 2),end="")
-            sys.stdout.flush()
-        progress_Now = 99
+        else:
+            progress_Now = 99
     if over:
         print("")
     else:
@@ -211,21 +223,12 @@ if __name__ == '__main__':
                 today = input("(YYYY-MM-DD):")
                 today_set = True
 
-
-        # choose url_home
-        url_pageNum_of_home = 1
-        url_home = "https://www.sehuatang.org/forum-" + str(URL_List[typeChoose-1]) + "-" + str(url_pageNum_of_home) + ".html"        
+        home_code = URL_List[typeChoose-1]       
         print('[*]===============================================')
         print("[*]以下為 " + str(today) + " " + str(typeList[typeChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
         
-        # request to sehuatang
-        response_of_home = requests.get(url_home)
-
-        # bs4 analysis
-        bs_home = bs4.BeautifulSoup(response_of_home.text,"html.parser")
-        
         # make the list of article that published today
-        today_list = today_article(bs_home)
+        today_list = today_article(home_code)
 
         # start to extract
         if extractChoose_mean == 'title':
