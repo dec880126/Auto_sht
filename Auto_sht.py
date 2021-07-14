@@ -17,7 +17,7 @@ def today_article(soup):
     rtype: list
     """
     # change the date to extract the data if you want
-    # today = "2021-07-13"
+    # today = "2021-07-14"
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
     tbody = soup.find_all('tbody')
     today_list = [] # list of "article code"
@@ -98,7 +98,7 @@ def get_pic_urlList(today_list):
 
 if __name__ == '__main__':
     while True:        
-        URL_List = ["https://www.sehuatang.org/forum-36-1.html", "https://www.sehuatang.org/forum-37-1.html", "https://www.sehuatang.org/forum-2-1.html", "https://www.sehuatang.org/forum-38-1.html", "https://www.sehuatang.org/forum-103-1.html"]
+        URL_List = [36, 37, 2, 38, 103]
         '''
         URL_List
         0. 無碼: https://www.sehuatang.org/forum-36-1.html
@@ -141,7 +141,7 @@ if __name__ == '__main__':
             print("Error of extractChoose")        
 
         # choose url_home
-        url_home = URL_List[typeChoose-1]
+        url_home = "https://www.sehuatang.org/forum-" + str(URL_List[typeChoose-1]) + "-1.html"
         print('[*]===============================================')
         print("[*]以下為 " + str(time.strftime("%Y-%m-%d", time.localtime())) + " " + str(typeList[typeChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
         
