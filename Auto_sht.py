@@ -4,11 +4,12 @@ import os
 import time
 import sys
 
-version = "1.6.0"
+version = "1.6.1"
 
 def today_article(home_code):
     """
-    You can change the date to whenever you want
+    To get the article published today
+
     rtype: list
     """
     print("[/]正在獲取本日文章清單...")
@@ -46,6 +47,7 @@ def today_article(home_code):
 def get_title(today_list):
     """
     Read the article_Code and print all title that correspond to the parameter "today"
+
     type today_list: list (article_Code)
     """
     titleNum = 0
@@ -72,6 +74,7 @@ def get_title(today_list):
 def get_magnet(today_list):
     """
     Read the article_Code and print all magnet that correspond to the parameter "today"
+
     type today_list: list
     rtype: None
     """            
@@ -104,8 +107,7 @@ def get_pic_urlList(today_list):
     """            
     picNum = 0
     pic_link_List = []
-
-    print("[/]Pic_URL.html 產生中...")
+    
     for article_Code in today_list:        
         progress_bar(int(picNum/60*99))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
@@ -119,29 +121,40 @@ def get_pic_urlList(today_list):
     progress_bar(100, over = True)
 
     print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(picNum) + "個 Pic URL")    
-    make_html(pic_link_List, "Pic_URL.html")
-    print("[*]Pic_URL.html 產生成功!")
+    make_html(pic_link_List, "Auto_SHT_Pic.html")
+    print("[*]Auto_SHT_Pic.html 產生成功!")
     print('[*]===============================================')
     os.system("pause")
+
 
 def make_html(input_list, fileName):
     '''
     Read the url in the input_list, and make the HTML file
+
     type input_list: list
     '''
     path = "./" + fileName
+
+    print("[/]Auto_SHT_Pic.html 產生中...")
     f = open(path, 'w')
-    f.write("<!doctype html><html>    <head>        <title>Auto SHT ! </title>    </head>    <body>")
+    f.write("<!doctype html><html><head><title>Auto SHT !</title></head><body>")
 
     for url in input_list:
-        if url != "None":
-            f.write("<img src = " + url + """ width="1200" height="807">""")
+        if url == "None":
+            continue
+        f.write("<img src = " + url + """ width="1200" height="807">""")
 
-    f.write("    </body></html>")
+    f.write("</body></html>")
     f.close()
+    print(f"[*]檔案路徑: {os.getcwd()}\{path[2:]}")
 
 
 def progress_bar(progress_Now, over = False):# 1~101
+    '''
+    Make progress bar by 0% ~ 100%
+
+    type progress_Now: int
+    '''
     if progress_Now > 99:
         if progress_Now == 100:
             print("\r",end="")
@@ -155,12 +168,19 @@ def progress_bar(progress_Now, over = False):# 1~101
         print("[/]Download progress: {}%: ".format(progress_Now),"▋" * (progress_Now // 2),end="")
         sys.stdout.flush()
         time.sleep(0.05)
-    
+
+
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
 
 
 if __name__ == '__main__':
     today_set = False
-    while True:        
+    while True:
+        clearConsole()
         URL_List = [36, 37, 2, 38, 103]
         '''
         URL_List
@@ -172,6 +192,9 @@ if __name__ == '__main__':
         '''
         print('[*]================== Auto_sht ===================')
         print("[*]                    v" + version)
+        print("[*]")
+        print("[*]    ↓ Follow the updates and Guides Here ↓")
+        print("[*]https://github.com/dec880126/Auto_sht/releases")
         print('[*]===============================================')
         print("[*]                 1. 無碼")
         print("[*]                 2. 有碼")
@@ -182,11 +205,11 @@ if __name__ == '__main__':
         print("[*]                 7. 修改日期")
         print('[*]===============================================')
         typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
-        typeChoose = int(input("請選擇功能(1~6):"))
+        typeChoose = int(input("[?]請選擇功能(1~6):"))
         # Exception
         if typeChoose < 1 or typeChoose > 7:
             print('[*]===============================================')
-            print("[*]請重新輸入功能選單中之數字(1~6)...")
+            print("[?]請重新輸入功能選單中之數字(1~6)...")
             os.system("pause")
             continue
 
@@ -198,10 +221,10 @@ if __name__ == '__main__':
         if typeChoose == 7:
             print("[*]請問日期要更改為?")
             print("""[*]  !!注意!!  :  "-"號是必要的""")
-            today = input("(YYYY-MM-DD):")
+            today = input("[?](YYYY-MM-DD):")
             continue        
         
-        extractChoose = input("選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
+        extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")        
         if extractChoose == 't' or extractChoose == 'T':
             extractChoose_mean = 'title'
         elif extractChoose == 'm' or extractChoose == 'M':
@@ -213,12 +236,12 @@ if __name__ == '__main__':
 
         # Choose Date        
         while not(today_set):
-            today_or_not = input("[*]要抓取的是今天的資料嗎?(y/n):")
+            today_or_not = input("[?]要抓取的是今天的資料嗎?(y/n):")
             if today_or_not == "y" or today_or_not == "Y":
                 today = str(time.strftime("%Y-%m-%d", time.localtime()))
                 today_set = True
             elif today_or_not == "n" or today_or_not == "N":
-                print("[*]請問要抓取的日期是?")
+                print("[?]請問要抓取的日期是?")
                 print("""[*]  !!注意!!  :  "-"號是必要的""")
                 today = input("(YYYY-MM-DD):")
                 today_set = True
