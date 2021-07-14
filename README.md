@@ -18,3 +18,17 @@ import bs4
 import os
 import time
 ```
+## How to use?
+- By .bat
+	1. Download the latest release
+	2. Open the zip
+	3. click the `auto_sht.bat`
+
+- By Python Compiler
+> Windows User
+	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is
+	2. type the command `python .\auto_sht.py`
+
+> Mac OS User
+	1. Open the Terminal at the folder where `auto_sht.py` is
+	2. type the command `python .\auto_sht.py`
