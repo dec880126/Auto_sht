@@ -185,6 +185,7 @@ def getYesterday(how_many_day_pre):
     yesterday=today-oneday  
     return yesterday
 
+
 if __name__ == '__main__':
     today_set = False
     while True:
