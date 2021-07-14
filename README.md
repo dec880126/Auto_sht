@@ -17,7 +17,9 @@ import bs4
 - By Python Compiler
 > Windows User<br>
 	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is<br>
-	2. type the command `python .\auto_sht.py`
+	2. type the command `python .\auto_sht.py`<br>
+	
+PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 
 > Mac OS User<br>
 	1. Open the Terminal at the folder where `auto_sht.py` is<br>
