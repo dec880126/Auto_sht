@@ -10,6 +10,7 @@ Current version: ver 1.5.0
 |ver 1.3.1  |Optimization and Bug fixes
 |ver 1.4.0  |新增: 抓取之日期選擇與修改功能
 |ver 1.5.0  |新增: 圖片預覽 HTML file 產生功能
+|ver 1.5.1  |Optimization and Bug fixes
 
 *預計新增: 挑選功能*
 
