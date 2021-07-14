@@ -4,6 +4,7 @@ To simplify the work for browsing sehuatang.org
 >Current version: ver 1.6.0
 
 ## Necessary modules
+Of course ``Python`` environment is necessary
 ```
 import requests 
 import bs4
