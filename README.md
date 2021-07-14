@@ -1,6 +1,6 @@
 # Auto SHT
 ## Development Notes
-Current version: ver 1.5.0
+Current version: ver 1.5.1
 |           |What's New                          
 |-----------|-------------------------------
 |ver 1.0.0  |可提取 magnet 之 sehuatang 輔助程式
