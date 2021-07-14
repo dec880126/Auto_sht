@@ -1,4 +1,4 @@
-# Auto SHT
+<h1 align="center">Auto SHT</h1>
 Current version: ver 1.5.3
 
 ## Necessary modules
