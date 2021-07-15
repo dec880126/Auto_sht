@@ -7,7 +7,7 @@ import requests
 import bs4
 import datetime
 
-version = "1.6.3"
+version = "1.6.4"
 
 class movie():
     def __init__(self):
@@ -75,12 +75,8 @@ def get_title(today_list):
         title_list.append(title)
     progress_bar(100, over = True)
 
-    for t in title_list:
-        print("[*]" + t)
-
     print("[*]Title 已提取完畢" + "一共抓取了" + str(titleNum) + "個 title")
-    print('[*]===============================================')
-    os.system("pause")
+    print('[*]===============================================')    
     return title_list
 
 
@@ -103,12 +99,9 @@ def get_magnet(today_list):
         magnet = bs_pages.find('div','blockcode').get_text()
         magnet_List.append(magnet.removesuffix('复制代码'))
     progress_bar(100, over = True)
-
-    for mag in magnet_List:
-        print(mag)
+    
     print("[*]Magnet 已提取完畢" + "一共抓取了" + str(magNum) + "個 magnet")
     print('[*]===============================================')
-    os.system("pause")
     return magnet_List
 
 
@@ -135,10 +128,9 @@ def get_pic_urlList(today_list):
     progress_bar(100, over = True)
 
     print("[*]Pic URL 已提取完畢" + "一共抓取了" + str(picNum) + "個 Pic URL")    
-    make_html(pic_link_List, "Auto_SHT_Pic.html")    
+    path = make_html(pic_link_List, "Auto_SHT_Pic.html")    
     print('[*]===============================================')
-    os.system("pause")
-    return pic_link_List
+    return path
 
 
 def make_html(input_list, fileName):
@@ -160,7 +152,9 @@ def make_html(input_list, fileName):
 
     f.write("</body></html>")
     f.close()
-    print(f"[*]{fileName} 產生成功! -> 檔案路徑: {os.getcwd()}\{path[2:]}")
+    path = f"{os.getcwd()}\{path[2:]}"
+    print(f"[*]{fileName} 產生成功! -> 檔案路徑: {path}")
+    return path
 
 
 def progress_bar(progress_Now, over = False):# 1~101
@@ -200,6 +194,8 @@ def getYesterday(how_many_day_pre):
 
 if __name__ == '__main__':
     # Param
+    typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
+    type_List2 = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
     today_set = False
     today_list = []
     typeChoose_last = 0
@@ -229,8 +225,7 @@ if __name__ == '__main__':
         print("[*]                 5. 中文")
         print("[*]                 6. 結束程式")
         print("[*]                 7. 修改日期")
-        print('[*]===============================================')
-        typeList = ["無碼", "有碼", "國產", "歐美", "中文"]
+        print('[*]===============================================')        
         typeChoose = int(input("[?]請選擇功能(1~6):"))        
         # Exception
         if typeChoose < 1 or typeChoose > 7:
@@ -289,9 +284,10 @@ if __name__ == '__main__':
             today_list = today_article(home_code)
         else:
             print("[*]本日文章清單已存在!")
-
-        type_List2 = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
+        
+        # start to extract
         """
+        CONTENT OF type_List2
         INDEX = typeChoose-1
 
         WM: 無碼
@@ -300,29 +296,30 @@ if __name__ == '__main__':
         OM: 歐美
         JW: 中文
         """
-        
-        # start to extract
         if extractChoose_mean == 'title':
             try:
-                print(type_List2[typeChoose-1].title)
+                for text in type_List2[typeChoose-1].title:
+                    print("[*]" + text)
             except:
                 type_List2[typeChoose-1] = movie()
                 type_List2[typeChoose-1].title = get_title(today_list)
-                print(type_List2[typeChoose-1].title)
+                for text in type_List2[typeChoose-1].title:
+                    print("[*]" + text)
         elif extractChoose_mean == 'magnet':
             try:
-                print(type_List2[typeChoose-1].magnet)
+                for text in type_List2[typeChoose-1].magnet:
+                    print("[*]" + text)
             except:
                 type_List2[typeChoose-1] = movie()
                 type_List2[typeChoose-1].magnet = get_magnet(today_list)
-                print(type_List2[typeChoose-1].magnet)            
+                for text in type_List2[typeChoose-1].magnet:
+                    print("[*]" + text)            
         elif extractChoose_mean == 'picture':
             try:
-                print(type_List2[typeChoose-1].picture)
+                print(f"[*]檔案路徑: {type_List2[typeChoose-1].picture}")                
             except:
                 type_List2[typeChoose-1] = movie()
                 type_List2[typeChoose-1].picture = get_pic_urlList(today_list)
-                print(type_List2[typeChoose-1].picture)
         else:
             print("[*]請重新輸入功能...")
             os.system("pause")
@@ -330,3 +327,5 @@ if __name__ == '__main__':
 
         # Record latest typeChoose
         typeChoose_last = typeChoose
+
+        os.system("pause")
