@@ -45,7 +45,7 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 1.6.0  |新增: 多頁搜尋功能
 |ver 1.6.1  |Optimization and Bug fixes
 |ver 1.6.2  |優化: 日期選擇功能
-|ver 1.6.2  |優化: 文章清單抓取效能
+|ver 1.6.3  |優化: 文章清單抓取效能
 
 
 *預計新增: 挑選功能*
