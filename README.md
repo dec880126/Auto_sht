@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 1.6.3
+>Current version: ver 1.6.4
 
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
@@ -46,6 +46,7 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 1.6.1  |Optimization and Bug fixes
 |ver 1.6.2  |優化: 日期選擇功能
 |ver 1.6.3  |優化: 文章清單抓取效能
+|ver 1.6.4  |優化: 資料抓取具暫存功能
 
 
 *預計新增: 挑選功能*
