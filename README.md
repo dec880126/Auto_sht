@@ -7,9 +7,9 @@ To simplify the work for browsing sehuatang.org
 Of course ``Python environment`` is necessary.<br>
 In addition to environment, the modules below are also necessary.
 ```
-import requests 
-import bs4
-import datetime
+pip install requests 
+pip install beautifulsoup4
+pip install datetime
 ```
 ## How to use?
 - By .bat
