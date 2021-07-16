@@ -5,7 +5,7 @@ import webbrowser
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.2.0"
+version = "3.2.1"
 
 class Fourm():
     def __init__(self):
