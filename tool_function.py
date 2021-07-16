@@ -34,15 +34,7 @@ def make_html(input_list, fileName, titleList, magnetList):
 
     print(f"[/]{fileName} 產生中...")
     f = open(path, 'w', encoding="utf-8")
-    f.write(f"""
-    <!doctype html>
-    <html>
-        <head>
-            <title>Auto SHT Picture Viewer</title>
-        </head>
-        <body>
-            <div style="text-align:center;">
-    """)
+    f.write(f"""<!doctype html>\n<html>\n\t<head>\n\t\t<title>Auto SHT Picture Viewer</title>\n\t</head>\n\t<body>\n\t\t<div style="text-align:center;">\n""")
 
     pageNum = 0
     for url in input_list:
@@ -50,19 +42,16 @@ def make_html(input_list, fileName, titleList, magnetList):
         if url == "None":
             continue
         elif url == "end of page":
-            f.write(f"<br><h3>{magnetList[pageNum]}</h3>")
-            f.write("<hr />")
+            to_write = "\t\t\t\t<br>\n\t\t\t\t<h3>" + magnetList[pageNum] + "</h3>\n"
+            f.write(to_write)
+            f.write("\t\t\t<hr />\n")
             pageNum += 1
         elif url == "Head of Page":
-            f.write("<h2>" + title + "</h2>")
+            f.write(f"""\t\t\t<h2>{title}</h2>\n""")
         else:
-            f.write("<img src = " + str(url) + """ width="1200" height="807">""")
+            f.write("\t\t\t\t<img src = " + str(url) + """ width="1200" height="807">\n""")
 
-    f.write("""
-                <a>Copyright © 2021.</a><a href = "https://github.com/dec880126" target="_blank">Cyuan</a><a>&nbsp&nbspAll rights reserved. </a>
-            </div>
-        </body>
-    </html>""")
+    f.write("""\t\t\t<a>Copyright © 2021.</a><a href = "https://github.com/dec880126" target="_blank">Cyuan</a><a>&nbsp&nbspAll rights reserved. </a>\n\t\t</div>\n\t</body>\n</html>""")
     f.close()
     path = f"{os.getcwd()}\{path[2:]}"
     
