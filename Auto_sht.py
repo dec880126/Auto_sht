@@ -22,6 +22,14 @@ if __name__ == '__main__':
     fourmList_Eng = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
     fourmList = []
     URL_List = [36, 37, 2, 38, 103]
+    '''
+    URL_List
+    0. 無碼: https://www.sehuatang.org/forum-36-1.html
+    1. 有碼: https://www.sehuatang.org/forum-37-1.html
+    2. 國產: https://www.sehuatang.org/forum-2-1.html
+    3. 歐美: https://www.sehuatang.org/forum-38-1.html
+    4. 中文: https://www.sehuatang.org/forum-103-1.html
+    '''
     today_list = [[], [], [], [], []]
     fourmChoose_last = 0
 
@@ -35,14 +43,7 @@ if __name__ == '__main__':
     # Main Loop
     while True:
         clearConsole()
-        '''
-        URL_List
-        0. 無碼: https://www.sehuatang.org/forum-36-1.html
-        1. 有碼: https://www.sehuatang.org/forum-37-1.html
-        2. 國產: https://www.sehuatang.org/forum-2-1.html
-        3. 歐美: https://www.sehuatang.org/forum-38-1.html
-        4. 中文: https://www.sehuatang.org/forum-103-1.html
-        '''
+        
         print('[*]================== Auto_sht ===================')
         print("[*]                    v" + version)
         print("[*]")
