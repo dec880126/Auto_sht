@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 3.3.0
+>Current version: ver 3.4.0
 
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
@@ -52,5 +52,6 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.1.0  |新增: 自動開啟產生之HTML files
 |ver 3.2.0  |優化: 資料抓取效能 速度提升約 3 倍
 |ver 3.2.1  |Bug fixes: 修正 中文區 偶爾會出現沒無 magnet 連結，只有 `.torrent` 的報錯修正
-|ver 3.2.1  |優化: HTML files 分頁顯示
+|ver 3.3.0  |優化: HTML files 分頁顯示
+|ver 3.4.0  |增加: 已搜尋過之 magnet 查詢功能
 
