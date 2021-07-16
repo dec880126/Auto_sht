@@ -31,7 +31,7 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 ## Development Notes
 
 |           |Type  |What's New                        
-|-----------|-------------------------------
+|-----------|--------|--------------------------
 |ver 1.0.0  |初版    |magnet 之 sehuatang 輔助程式
 |ver 1.1.0  |新增    |挑出當日更新文章功能      
 |ver 1.2.0  |新增    |提取文章標題功能
