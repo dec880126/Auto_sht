@@ -3,9 +3,9 @@ import time
 import webbrowser
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
-from tool_function import clearConsole, getYesterday, choose_type
+from tool_function import clearConsole, choose_type, changeDate, make_html
 
-version = "3.5.1"
+version = "3.6.0"
 
 class Fourm():
     def __init__(self):
@@ -15,23 +15,7 @@ class Fourm():
         self.title_magnet = {}
         self.picture_path = "" # path of HTML files
         self.fileName = "請先運行圖片抓取模式"
-    
-    def reset(self):
-        self.type = ""
-        self.title = []
-        self.magnet = []
-        self.title_magnet = {}
-        self.picture_path = "" # path of HTML files
-        self.fileName = "請先運行圖片抓取模式"
 
-
-def changeDate():
-    print('[*]===============================================')
-    print(f"[*](昨天: -1, 前天: -2...)")
-    print('[*]===============================================')
-    today = input("[?]請問日期要更改為?:")
-    if int(today) < 0 and int(today) > -4:
-        return getYesterday(abs(int(today)))
 
 if __name__ == '__main__':
     # Param
@@ -154,9 +138,8 @@ if __name__ == '__main__':
             if len(today_list[fourmChoose-1]) == 0:
                 print(f"[*]{today} 的文章清單不存在!")
                 today_list[fourmChoose-1] = get_today_article(home_code, today)
-            else:
-                print(f"[*]{today} 的文章清單獲取成功!")
-            
+            else:                
+                today_set = True            
             if not today_list[fourmChoose-1]:
                 print(f"[*]{today} 目前尚未有文章更新")
                 today = changeDate()
@@ -168,8 +151,9 @@ if __name__ == '__main__':
         if extractChoose_mean == 'choose':
             # Ensure Data exist
             if len(workSpace.title_magnet) == 0:
-                workSpace.title_magnet, workSpace.picture_path, workSpace.fileName = get_ALL(today_list[fourmChoose-1])
-       
+                workSpace.title_magnet, pic_link_List = get_ALL(today_list[fourmChoose-1])
+
+            workSpace.picture_path, workSpace.fileName = make_html(input_list=pic_link_List, fileName="Auto_SHT_Pic.html", titleList=[title for title in workSpace.title_magnet.keys()], magnetList=[magnet for magnet in workSpace.title_magnet.values()])        
             print('[*]===============================================')
 
             # Open HTML files with default browser
