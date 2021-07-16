@@ -5,10 +5,19 @@ import webbrowser
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.4.0"
+version = "3.5.0"
 
 class Fourm():
     def __init__(self):
+        self.type = ""
+        self.title = []
+        self.magnet = []
+        self.title_magnet = {}
+        self.picture_path = "" # path of HTML files
+        self.fileName = "請先運行圖片抓取模式"
+        self.searchIndex = -1
+    
+    def reset(self):
         self.type = ""
         self.title = []
         self.magnet = []
@@ -58,18 +67,25 @@ if __name__ == '__main__':
         print("[*]                 1. 開始抓取")
         print("[*]                 2. 修改日期")
         print("[*]                 3. 資料查詢")
-        print("[*]                 4. 結束程式")
+        print("[*]                 4. 重製資料")
+        print("[*]                 5. 結束程式")
         print('[*]===============================================')        
-        typeChoose = int(input("[?]請選擇功能(1~4):"))
+        typeChoose = int(input("[?]請選擇功能(1~5):"))
 
         # Finish
+        if typeChoose == 5:
+            break
+
+        # Reset Data
         if typeChoose == 4:
-            break 
+            reset_index = choose_type()
+            fourmList[reset_index-1].__init__()
+            continue
         
         # To ensure typeChoose in the list
-        if typeChoose < 1 or typeChoose > 4:
+        if typeChoose < 1 or typeChoose > 5:
             print('[*]===============================================')
-            print("[?]請重新輸入功能選單中之數字(1~4)...")
+            print("[?]請重新輸入功能選單中之數字(1~5)...")
             os.system("pause")
             continue
 
