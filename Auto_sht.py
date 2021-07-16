@@ -5,15 +5,17 @@ import webbrowser
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.3.0"
+version = "3.4.0"
 
 class Fourm():
     def __init__(self):
+        self.type = ""
         self.title = []
         self.magnet = []
         self.title_magnet = {}
         self.picture_path = "" # path of HTML files
         self.fileName = "請先運行圖片抓取模式"
+        self.searchIndex = -1
 
 
 if __name__ == '__main__':
@@ -37,12 +39,15 @@ if __name__ == '__main__':
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
 
     # Publish class
+    fourmList_index = 0
     for fourm in fourmList_Eng:
         fourmList.append(Fourm())
+        fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
+        fourmList_index += 1
 
     # Main Loop
     while True:
-        clearConsole()
+        # clearConsole()
         
         print('[*]================== Auto_sht ===================')
         print("[*]                    v" + version)
@@ -52,20 +57,21 @@ if __name__ == '__main__':
         print('[*]===============================================')
         print("[*]                 1. 開始抓取")
         print("[*]                 2. 修改日期")
-        print("[*]                 3. 結束程式")
+        print("[*]                 3. 資料查詢")
+        print("[*]                 4. 結束程式")
         print('[*]===============================================')        
-        typeChoose = int(input("[?]請選擇功能(1~3):"))   
+        typeChoose = int(input("[?]請選擇功能(1~4):"))
 
         # Finish
-        if typeChoose == 3:
+        if typeChoose == 4:
             break 
         
         # To ensure typeChoose in the list
-        if typeChoose < 1 or typeChoose > 3:
+        if typeChoose < 1 or typeChoose > 4:
             print('[*]===============================================')
-            print("[?]請重新輸入功能選單中之數字(1~3)...")
+            print("[?]請重新輸入功能選單中之數字(1~4)...")
             os.system("pause")
-            continue       
+            continue
 
         # Change date
         if typeChoose == 2:
@@ -75,9 +81,38 @@ if __name__ == '__main__':
             today = input("[?]請問日期要更改為?:")
             if int(today) < 0 and int(today) > -4:
                 today = getYesterday(abs(int(today)))
-            continue        
+            continue
         
-        extractChoose_mean = 'choose'
+        # Data Search
+        """
+        fourmList = [WM, YM, GC, OM, JW] <- every element is object Fourm
+        """
+        temp = 0
+        if typeChoose == 3:   
+            print('[*]===============================================')         
+            try:                
+                for fourm in fourmList:
+                    if fourm.title_magnet:
+                        temp += 1
+                        print(f"[*]{temp}. {fourm.type}")
+                        fourm.searchIndex = temp
+                print('[*]===============================================')
+                fourm_search = choose_type()
+
+                if len(fourmList[fourm_search-1].title_magnet) == 0:
+                    raise BaseException()
+                for title, magnet in fourmList[fourm_search-1].title_magnet.items():
+                    if magnet != "None":
+                        print(f'[*] {title} : {magnet}')                    
+            except:
+                print(f"[*]資料庫中目前無資料")
+                print('[*]===============================================')
+            os.system("pause")
+            continue
+        
+        if temp == 0:
+            fourmChoose = choose_type()
+        
         # while True:     
         #     extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p, 挑選:c):")
         #     if extractChoose == 't' or extractChoose == 'T':
@@ -95,10 +130,10 @@ if __name__ == '__main__':
         #     else:
         #         print(f"請輸入正確的字符")
 
-        # Fourm Choose
-        fourmChoose = choose_type()
+        # Fourm Choose        
 
-        home_code = URL_List[fourmChoose-1]       
+        home_code = URL_List[fourmChoose-1]
+        extractChoose_mean = 'choose'
         print('[*]===============================================')
         print("[*]以下為 " + str(today) + " " + str(fourmList_Chinese[fourmChoose-1]) + " 區的 " + extractChoose_mean + " :")
         
@@ -137,9 +172,12 @@ if __name__ == '__main__':
                     workSpace.title_magnet[title] = "None"
                 elif if_save == "exit":
                     break
+            else:
+                temp = workSpace.title_magnet
             if if_save == "exit":
                 workSpace.title_magnet = temp
                 continue
+            workSpace.title_magnet = temp
             print('[*]===============================================')
             print(f"[*]以下為 magnet 輸出:")
             for title in workSpace.title_magnet:                
