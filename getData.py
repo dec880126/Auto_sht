@@ -144,6 +144,7 @@ def get_ALL(today_list):
             magnet_List.append(bs_pages.find('div','blockcode').get_text().removesuffix('复制代码'))
             title_List.append(bs_pages.find('span', attrs={'id' : 'thread_subject'}).get_text())            
             img_block = bs_pages.find_all('ignore_js_op')
+            pic_link_List.append("Head of Page")
             for block in img_block[:-1]:
                 pic_link = block.find('img').get('file')
                 if pic_link != None:
@@ -159,5 +160,4 @@ def get_ALL(today_list):
             print(f"\n{title} ")
             print(f"    無 magnet 請開啟連結: " + "https://www.sehuatang.org/thread-" + article_Code_error + "-1-1.html" + "  確認...")    
 
-    path, fileName = make_html(pic_link_List, "Auto_SHT_Pic.html") 
-    return dict(zip(title_List, magnet_List)), path, fileName
+    return dict(zip(title_List, magnet_List)), pic_link_List
