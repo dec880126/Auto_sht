@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     # Main Loop
     while True:
-        # clearConsole()
+        clearConsole()
         
         print('[*]================== Auto_sht ===================')
         print("[*]                    v" + version)
