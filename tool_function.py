@@ -42,8 +42,9 @@ def make_html(input_list, fileName):
     f.write("</body></html>")
     f.close()
     path = f"{os.getcwd()}\{path[2:]}"
+    
     print(f"[*]{fileName} 產生成功! -> 檔案路徑: {path}")
-    return path
+    return path, fileName
 
 
 def clearConsole():
@@ -61,6 +62,7 @@ def getYesterday(how_many_day_pre):
 
 
 def choose_type():
+    typeList_Chinese = ["無碼", "有碼", "國產", "歐美", "中文"]
     print('[*]===============================================') 
     print("[*]                 1. 無碼")
     print("[*]                 2. 有碼")
@@ -69,7 +71,8 @@ def choose_type():
     print("[*]                 5. 中文")
     print('[*]===============================================') 
     while True:     
-        typeChoose = int(input("[?]請選擇分區(1~5):"))
-        if typeChoose > 0 and typeChoose < 6:
+        typeChoose = int(input(f"[?]請選擇分區(1~5):"))
+        if typeChoose >= 1 and typeChoose <= 5:
+            print(f'[*]選擇的是 {typeChoose}. {typeList_Chinese[typeChoose-1]} 分區')
             print('[*]===============================================') 
             return typeChoose
