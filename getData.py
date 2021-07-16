@@ -8,7 +8,7 @@ def get_today_article(home_code, today):
 
     rtype: list
     """
-    print("[/]正在獲取本日文章清單...")
+    print(f"[/]{today} 的文章清單獲取中...")
 
     # list of "article code"
     today_list = []
@@ -36,7 +36,7 @@ def get_today_article(home_code, today):
                 today_list.append(id[-6:])      # extract article_Code
             continue     
         url_pageNum_of_home += 1
-    print("[*]本日文章清單獲取完成!")
+    print(f"[*]{today} 的文章清單獲取完成!")
     return today_list   # List of article_Code
 
 
@@ -148,6 +148,7 @@ def get_ALL(today_list):
                 pic_link = block.find('img').get('file')
                 if pic_link != None:
                     pic_link_List.append(pic_link)
+            pic_link_List.append("end of page")
         except:
             magnet_error_List.append(bs_pages.find('span', attrs={'id' : 'thread_subject'}).get_text())
             article_Code_error_List.append(article_Code)
