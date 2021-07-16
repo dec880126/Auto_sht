@@ -12,6 +12,10 @@ pip install beautifulsoup4
 pip install datetime
 ```
 ## How to use?
+- By .exe
+	1. Click `Auto_sht.exe`
+	2. Runnung
+	
 - By .bat
 	1. Download the latest release
 	2. UNZIP
