@@ -41,7 +41,7 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 1.5.0  |新增    |圖片預覽 HTML file 產生功能
 |ver 1.5.1  |優化    |Optimization and Bug fixes
 |ver 1.5.2  |優化    |Optimization and Bug fixes
-|ver 1.5.3  |新增    |抓取進度條功能
+|ver 1.5.3  |優化    |抓取進度視覺化
 |ver 1.6.0  |新增    |多頁搜尋功能
 |ver 1.6.1  |優化    |Optimization and Bug fixes
 |ver 1.6.2  |優化    |日期選擇功能
