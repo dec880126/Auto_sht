@@ -56,5 +56,5 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.4.0  |新增    |已搜尋過之 magnet 查詢功能
 |ver 3.5.0  |新增    |資料重置功能
 |ver 3.5.1  |修正    |解決當日無更新文章會崩潰的錯誤
-|ver 3.6.0  |優化    |HTML files 美化以及新增標題及 magnet 預覽功能 以及 連結至 sehuatang.org 之 link
+|ver 3.6.0  |優化    |1. HTML files 美化以及新增標題及 magnet 預覽功能<br>2. 連結至 sehuatang.org 之 link
 
