@@ -1,10 +1,11 @@
 import os
 import time
+import webbrowser
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.0.0"
+version = "3.1.0"
 
 class Fourm():
     def __init__(self):
@@ -48,22 +49,22 @@ if __name__ == '__main__':
         print("[*]    ↓ Follow the updates and Guides Here ↓")
         print("[*]https://github.com/dec880126/Auto_sht/releases")
         print('[*]===============================================')
-        print("[*]                 1. 選擇功能")
+        print("[*]                 1. 開始抓取")
         print("[*]                 2. 修改日期")
         print("[*]                 3. 結束程式")
         print('[*]===============================================')        
         typeChoose = int(input("[?]請選擇功能(1~3):"))   
 
+        # Finish
+        if typeChoose == 3:
+            break 
+        
         # To ensure typeChoose in the list
         if typeChoose < 1 or typeChoose > 3:
             print('[*]===============================================')
             print("[?]請重新輸入功能選單中之數字(1~3)...")
             os.system("pause")
-            continue
-
-        # Finish
-        if typeChoose == 3:
-            break        
+            continue       
 
         # Change date
         if typeChoose == 2:
@@ -75,22 +76,23 @@ if __name__ == '__main__':
                 today = getYesterday(abs(int(today)))
             continue        
         
-        while True:     
-            extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p, 選擇:c):")
-            if extractChoose == 't' or extractChoose == 'T':
-                extractChoose_mean = 'title'
-                break
-            elif extractChoose == 'm' or extractChoose == 'M':
-                extractChoose_mean = 'magnet'
-                break
-            elif extractChoose == 'p' or extractChoose == 'P':
-                extractChoose_mean = 'picture'
-                break
-            elif extractChoose == 'c' or extractChoose == 'C':
-                extractChoose_mean = 'choose'
-                break
-            else:
-                print(f"請輸入正確的字符")
+        extractChoose_mean = 'choose'
+        # while True:     
+        #     extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p, 挑選:c):")
+        #     if extractChoose == 't' or extractChoose == 'T':
+        #         extractChoose_mean = 'title'
+        #         break
+        #     elif extractChoose == 'm' or extractChoose == 'M':
+        #         extractChoose_mean = 'magnet'
+        #         break
+        #     elif extractChoose == 'p' or extractChoose == 'P':
+        #         extractChoose_mean = 'picture'
+        #         break
+        #     elif extractChoose == 'c' or extractChoose == 'C':
+        #         extractChoose_mean = 'choose'
+        #         break
+        #     else:
+        #         print(f"請輸入正確的字符")
 
         # Fourm Choose
         fourmChoose = choose_type()
@@ -120,8 +122,11 @@ if __name__ == '__main__':
             if workSpace.picture_path == "":
                 workSpace.picture_path, workSpace.fileName = get_pic_urlList(today_list[fourmChoose-1])
 
-            print(f"選擇時搭配 {workSpace.fileName} 使用 -> 檔案路徑: {workSpace.picture_path}")
+            print(f"選擇時搭配 {workSpace.fileName} 使用 -> 檔案路徑: {workSpace.picture_path}")            
             print('[*]===============================================')
+
+            # Open HTML files with default browser
+            webbrowser.open_new_tab(workSpace.picture_path)
 
             # Start working for choose movie
             for title in workSpace.title_magnet:
@@ -160,5 +165,9 @@ if __name__ == '__main__':
         
         os.system("pause")
     
-    # Remove the HTML files when program finished
-    os.remove(workSpace.picture_path)
+    try:
+        # Remove the HTML files when program finished
+        os.remove(workSpace.picture_path)
+    except:
+        pass
+    clearConsole()
