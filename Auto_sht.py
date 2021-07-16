@@ -11,15 +11,6 @@ class Fourm():
         self.title = []
         self.magnet = []
         self.picture_path = "" # path of HTML files
-    
-    def get_param(self, what_to_get):
-        if what_to_get == "title":
-            return self.title
-        elif what_to_get == "magnet":
-            return self.magnet
-        else:
-            print(f"Error of input for get_param")
-
 
 
 if __name__ == '__main__':
