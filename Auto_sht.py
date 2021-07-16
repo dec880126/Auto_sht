@@ -2,10 +2,10 @@ import os
 import time
 import webbrowser
 
-from getData import get_title, get_magnet, get_pic_urlList, get_today_article
+from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.1.0"
+version = "3.2.0"
 
 class Fourm():
     def __init__(self):
@@ -68,10 +68,10 @@ if __name__ == '__main__':
 
         # Change date
         if typeChoose == 2:
-            print("[*]請問日期要更改為?")
+            print('[*]===============================================')
             print(f"[*](昨天: -1, 前天: -2...)")
-            print("""[*]  !!注意!!  :  "-"號是必要的""")
-            today = input("[?](YYYY-MM-DD):")
+            print('[*]===============================================')
+            today = input("[?]請問日期要更改為?:")
             if int(today) < 0 and int(today) > -4:
                 today = getYesterday(abs(int(today)))
             continue        
@@ -113,32 +113,31 @@ if __name__ == '__main__':
         # start to extract
         if extractChoose_mean == 'choose':
             # Ensure Data exist
-            if len(workSpace.title) == 0:
-                workSpace.title =  get_title(today_list[fourmChoose-1])
-            if len(workSpace.magnet) == 0:
-                workSpace.magnet = get_magnet(today_list[fourmChoose-1])
             if len(workSpace.title_magnet) == 0:
-                workSpace.title_magnet = dict(zip(workSpace.title, workSpace.magnet))
-            if workSpace.picture_path == "":
-                workSpace.picture_path, workSpace.fileName = get_pic_urlList(today_list[fourmChoose-1])
-
-            print(f"選擇時搭配 {workSpace.fileName} 使用 -> 檔案路徑: {workSpace.picture_path}")            
+                workSpace.title_magnet, workSpace.picture_path, workSpace.fileName = get_ALL(today_list[fourmChoose-1])
+       
             print('[*]===============================================')
 
             # Open HTML files with default browser
             webbrowser.open_new_tab(workSpace.picture_path)
 
+            temp = workSpace.title_magnet.copy()
             # Start working for choose movie
             for title in workSpace.title_magnet:
                 if_save = input(f"{title}: ")
                 if if_save == "":
                     workSpace.title_magnet[title] = "None"
-            
+                elif if_save == "exit":
+                    break
+            if if_save == "exit":
+                workSpace.title_magnet = temp
+                continue
             print('[*]===============================================')
             print(f"以下為 magnet 輸出:")
             for title in workSpace.title_magnet:                
                 if workSpace.title_magnet[title] != "None":
                     print(workSpace.title_magnet[title])
+            print('[*]===============================================')
         elif extractChoose_mean == 'title':
             if len(workSpace.title) == 0:
                 for title in get_title(today_list[fourmChoose-1]):
@@ -157,8 +156,7 @@ if __name__ == '__main__':
         elif extractChoose_mean == 'picture':
             if workSpace.picture_path == "":
                 workSpace.picture_path, workSpace.fileName = get_pic_urlList(today_list[fourmChoose-1])
-
-            print(f"[*]{workSpace.fileName} 產生成功! -> 檔案路徑: {workSpace.picture_path}")
+            
             print('[*]===============================================')
         else:
             print("[*]請重新輸入功能...")
