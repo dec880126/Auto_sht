@@ -5,7 +5,7 @@ import webbrowser
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.5.0"
+version = "3.5.1"
 
 class Fourm():
     def __init__(self):
@@ -15,7 +15,6 @@ class Fourm():
         self.title_magnet = {}
         self.picture_path = "" # path of HTML files
         self.fileName = "請先運行圖片抓取模式"
-        self.searchIndex = -1
     
     def reset(self):
         self.type = ""
@@ -24,8 +23,15 @@ class Fourm():
         self.title_magnet = {}
         self.picture_path = "" # path of HTML files
         self.fileName = "請先運行圖片抓取模式"
-        self.searchIndex = -1
 
+
+def changeDate():
+    print('[*]===============================================')
+    print(f"[*](昨天: -1, 前天: -2...)")
+    print('[*]===============================================')
+    today = input("[?]請問日期要更改為?:")
+    if int(today) < 0 and int(today) > -4:
+        return getYesterday(abs(int(today)))
 
 if __name__ == '__main__':
     # Param
@@ -33,6 +39,7 @@ if __name__ == '__main__':
     fourmList_Eng = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
     fourmList = []
     URL_List = [36, 37, 2, 38, 103]
+    today_set = False
     '''
     URL_List
     0. 無碼: https://www.sehuatang.org/forum-36-1.html
@@ -91,12 +98,7 @@ if __name__ == '__main__':
 
         # Change date
         if typeChoose == 2:
-            print('[*]===============================================')
-            print(f"[*](昨天: -1, 前天: -2...)")
-            print('[*]===============================================')
-            today = input("[?]請問日期要更改為?:")
-            if int(today) < 0 and int(today) > -4:
-                today = getYesterday(abs(int(today)))
+            today = changeDate()
             continue
         
         # Data Search
@@ -104,15 +106,8 @@ if __name__ == '__main__':
         fourmList = [WM, YM, GC, OM, JW] <- every element is object Fourm
         """
         temp = 0
-        if typeChoose == 3:   
-            print('[*]===============================================')         
+        if typeChoose == 3:      
             try:                
-                for fourm in fourmList:
-                    if fourm.title_magnet:
-                        temp += 1
-                        print(f"[*]{temp}. {fourm.type}")
-                        fourm.searchIndex = temp
-                print('[*]===============================================')
                 fourm_search = choose_type()
 
                 if len(fourmList[fourm_search-1].title_magnet) == 0:
@@ -155,12 +150,19 @@ if __name__ == '__main__':
         
         # Check if today_List for each fourm exist or not
         # make the list of article that published today
-        if len(today_list[fourmChoose-1]) == 0:
-            print("[*]本日文章清單不存在!")
-            today_list[fourmChoose-1] = get_today_article(home_code, today)
-        else:
-            print("[*]本日文章清單已存在!")
-        
+        while not today_set:
+            if len(today_list[fourmChoose-1]) == 0:
+                print(f"[*]{today} 的文章清單不存在!")
+                today_list[fourmChoose-1] = get_today_article(home_code, today)
+            else:
+                print(f"[*]{today} 的文章清單獲取成功!")
+            
+            if not today_list[fourmChoose-1]:
+                print(f"[*]{today} 目前尚未有文章更新")
+                today = changeDate()
+                today_list[fourmChoose-1] = get_today_article(home_code, today)
+                today_set = True
+
         workSpace = fourmList[fourmChoose-1]
         # start to extract
         if extractChoose_mean == 'choose':
@@ -198,7 +200,7 @@ if __name__ == '__main__':
             print(f"[*]以下為 magnet 輸出:")
             for title in workSpace.title_magnet:                
                 if workSpace.title_magnet[title] != "None":
-                    print(workSpace.title_magnet[title])
+                    print("[*]" + workSpace.title_magnet[title])
             print('[*]===============================================')
         elif extractChoose_mean == 'title':
             if len(workSpace.title) == 0:
