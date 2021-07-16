@@ -153,7 +153,11 @@ if __name__ == '__main__':
             if len(workSpace.title_magnet) == 0:
                 workSpace.title_magnet, pic_link_List = get_ALL(today_list[fourmChoose-1])
 
-            workSpace.picture_path, workSpace.fileName = make_html(input_list=pic_link_List, fileName="Auto_SHT_Pic.html", titleList=[title for title in workSpace.title_magnet.keys()], magnetList=[magnet for magnet in workSpace.title_magnet.values()])        
+            workSpace.picture_path, workSpace.fileName = make_html(input_list=pic_link_List, fileName="Auto_SHT_Pic.html", \
+                titleList=[title for title in workSpace.title_magnet.keys()], \
+                magnetList=[magnet for magnet in workSpace.title_magnet.values()], \
+                article_Code_List=today_list[fourmChoose-1])
+                
             print('[*]===============================================')
 
             # Open HTML files with default browser
