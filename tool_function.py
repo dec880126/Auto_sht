@@ -6,6 +6,7 @@ import datetime
 def progress_bar(progress_Now, over = False):# 1~101
     '''
     Make progress bar by 0% ~ 100%
+
     type progress_Now: int
     '''
     if progress_Now > 99:
@@ -23,23 +24,45 @@ def progress_bar(progress_Now, over = False):# 1~101
         time.sleep(0.05)
 
 
-def make_html(input_list, fileName):
+def make_html(input_list, fileName, titleList, magnetList):
     '''
     Read the url in the input_list, and make the HTML file
+
     type input_list: list
     '''
     path = "./" + fileName
 
     print(f"[/]{fileName} 產生中...")
-    f = open(path, 'w')
-    f.write("<!doctype html><html><head><title>Auto SHT !</title></head><body>")
+    f = open(path, 'w', encoding="utf-8")
+    f.write(f"""
+    <!doctype html>
+    <html>
+        <head>
+            <title>Auto SHT Picture Viewer</title>
+        </head>
+        <body>
+            <div style="text-align:center;">
+    """)
 
+    pageNum = 0
     for url in input_list:
+        title = titleList[pageNum]
         if url == "None":
             continue
-        f.write("<img src = " + url + """ width="1200" height="807">""")
+        elif url == "end of page":
+            f.write(f"<br><h3>{magnetList[pageNum]}</h3>")
+            f.write("<hr />")
+            pageNum += 1
+        elif url == "Head of Page":
+            f.write("<h2>" + title + "</h2>")
+        else:
+            f.write("<img src = " + str(url) + """ width="1200" height="807">""")
 
-    f.write("</body></html>")
+    f.write("""
+                <a>Copyright © 2021.</a><a href = "https://github.com/dec880126" target="_blank">Cyuan</a><a>&nbsp&nbspAll rights reserved. </a>
+            </div>
+        </body>
+    </html>""")
     f.close()
     path = f"{os.getcwd()}\{path[2:]}"
     
@@ -76,3 +99,14 @@ def choose_type():
             print(f'[*]選擇的是 {typeChoose}. {typeList_Chinese[typeChoose-1]} 分區')
             print('[*]===============================================') 
             return typeChoose
+
+
+def changeDate():
+    print('[*]===============================================')
+    today = str(time.strftime("%Y-%m-%d", time.localtime()))
+    print(f"[*]今天是 {today}")
+    print(f"[*](昨天: -1, 前天: -2...)")
+    print('[*]===============================================')
+    date = input("[?]請問日期要更改為?:")
+    if int(date) < 0 and int(date) > -4:
+        return getYesterday(abs(int(date)))
