@@ -4,13 +4,15 @@ import time
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "2.0.0"
+version = "3.0.0"
 
 class Fourm():
     def __init__(self):
         self.title = []
         self.magnet = []
+        self.title_magnet = {}
         self.picture_path = "" # path of HTML files
+        self.fileName = "請先運行圖片抓取模式"
 
 
 if __name__ == '__main__':
@@ -31,7 +33,7 @@ if __name__ == '__main__':
 
     # Main Loop
     while True:
-        clearConsole()        
+        clearConsole()
         '''
         URL_List
         0. 無碼: https://www.sehuatang.org/forum-36-1.html
@@ -74,7 +76,7 @@ if __name__ == '__main__':
             continue        
         
         while True:     
-            extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p):")
+            extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p, 選擇:c):")
             if extractChoose == 't' or extractChoose == 'T':
                 extractChoose_mean = 'title'
                 break
@@ -84,6 +86,9 @@ if __name__ == '__main__':
             elif extractChoose == 'p' or extractChoose == 'P':
                 extractChoose_mean = 'picture'
                 break
+            elif extractChoose == 'c' or extractChoose == 'C':
+                extractChoose_mean = 'choose'
+                break
             else:
                 print(f"請輸入正確的字符")
 
@@ -92,9 +97,9 @@ if __name__ == '__main__':
 
         home_code = URL_List[fourmChoose-1]       
         print('[*]===============================================')
-        print("[*]以下為 " + str(today) + " " + str(fourmList_Chinese[fourmChoose-1]) + " 區的 " + extractChoose_mean + " 提取:")
+        print("[*]以下為 " + str(today) + " " + str(fourmList_Chinese[fourmChoose-1]) + " 區的 " + extractChoose_mean + " :")
         
-        # Check if today_List exist
+        # Check if today_List for each fourm exist or not
         # make the list of article that published today
         if len(today_list[fourmChoose-1]) == 0:
             print("[*]本日文章清單不存在!")
@@ -102,37 +107,58 @@ if __name__ == '__main__':
         else:
             print("[*]本日文章清單已存在!")
         
+        workSpace = fourmList[fourmChoose-1]
         # start to extract
-        """
-        CONTENT OF fourmList
-        INDEX = fourmChoose-1
-        WM: 無碼
-        YM: 有碼
-        GC: 國產
-        OM: 歐美
-        JW: 中文
-        """
-        if extractChoose_mean == 'title':
-            if len(fourmList[fourmChoose-1].title) == 0:
-                fourmList[fourmChoose-1].title = get_title(today_list[fourmChoose-1]) 
+        if extractChoose_mean == 'choose':
+            # Ensure Data exist
+            if len(workSpace.title) == 0:
+                workSpace.title =  get_title(today_list[fourmChoose-1])
+            if len(workSpace.magnet) == 0:
+                workSpace.magnet = get_magnet(today_list[fourmChoose-1])
+            if len(workSpace.title_magnet) == 0:
+                workSpace.title_magnet = dict(zip(workSpace.title, workSpace.magnet))
+            if workSpace.picture_path == "":
+                workSpace.picture_path, workSpace.fileName = get_pic_urlList(today_list[fourmChoose-1])
 
-            for text in fourmList[fourmChoose-1].title:
+            print(f"選擇時搭配 {workSpace.fileName} 使用 -> 檔案路徑: {workSpace.picture_path}")
+            print('[*]===============================================')
+
+            # Start working for choose movie
+            for title in workSpace.title_magnet:
+                if_save = input(f"{title}: ")
+                if if_save == "":
+                    workSpace.title_magnet[title] = "None"
+            
+            print('[*]===============================================')
+            print(f"以下為 magnet 輸出:")
+            for title in workSpace.title_magnet:                
+                if workSpace.title_magnet[title] != "None":
+                    print(workSpace.title_magnet[title])
+        elif extractChoose_mean == 'title':
+            if len(workSpace.title) == 0:
+                for title in get_title(today_list[fourmChoose-1]):
+                    workSpace.title_magnet[title] = ""
+
+            for text in workSpace.title:
                 print("[*]" + text)                
         elif extractChoose_mean == 'magnet':
-            if len(fourmList[fourmChoose-1].magnet) == 0:
-                fourmList[fourmChoose-1].magnet = get_magnet(today_list[fourmChoose-1]) 
+            if len(workSpace.magnet) == 0:
+                workSpace.magnet = get_magnet(today_list[fourmChoose-1])
+                for title, magnet in zip(workSpace.title, workSpace.magnet):
+                    workSpace.title_magnet[title] = magnet
             
-            for text in fourmList[fourmChoose-1].magnet:
-                print("[*]" + text)            
+            for title in workSpace.title_magnet:
+                print("[*]" + workSpace.title_magnet[title])            
         elif extractChoose_mean == 'picture':
-            if fourmList[fourmChoose-1].picture_path == "":
-                fourmList[fourmChoose-1].picture_path = get_pic_urlList(today_list[fourmChoose-1])
+            if workSpace.picture_path == "":
+                workSpace.picture_path, workSpace.fileName = get_pic_urlList(today_list[fourmChoose-1])
 
-            print(f"[*]檔案路徑: {fourmList[fourmChoose-1].picture_path}")
+            print(f"[*]{workSpace.fileName} 產生成功! -> 檔案路徑: {workSpace.picture_path}")
             print('[*]===============================================')
         else:
             print("[*]請重新輸入功能...")
-            os.system("pause")
-            continue
-
+        
         os.system("pause")
+    
+    # Remove the HTML files when program finished
+    os.remove(workSpace.picture_path)
