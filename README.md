@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 3.5.1
+>Current version: ver 3.6.0
 
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
@@ -56,3 +56,5 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.4.0  |新增    |已搜尋過之 magnet 查詢功能
 |ver 3.5.0  |新增    |資料重置功能
 |ver 3.5.1  |修正    |解決當日無更新文章會崩潰的錯誤
+|ver 3.6.0  |優化    |HTML files 美化以及新增標題及 magnet 預覽功能 以及 連結至 sehuatang.org 之 link
+
