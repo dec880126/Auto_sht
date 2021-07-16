@@ -5,7 +5,7 @@ import webbrowser
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, getYesterday, choose_type
 
-version = "3.2.1"
+version = "3.3.0"
 
 class Fourm():
     def __init__(self):
@@ -123,9 +123,16 @@ if __name__ == '__main__':
             webbrowser.open_new_tab(workSpace.picture_path)
 
             temp = workSpace.title_magnet.copy()
+
             # Start working for choose movie
+            print("[*]以下為挑選作業的規則說明:")
+            print("[*]如果要保留請隨意輸入(不要空白即可)，並按下 Enter 送出")
+            print("[*]如果要捨棄，直接按下 Enter 送出即可捨棄")
+            print('[*]===============================================')
+            Num = 0
             for title in workSpace.title_magnet:
-                if_save = input(f"{title}: ")
+                Num += 1
+                if_save = input(f"[?]{Num}. {title}:   ")
                 if if_save == "":
                     workSpace.title_magnet[title] = "None"
                 elif if_save == "exit":
@@ -134,7 +141,7 @@ if __name__ == '__main__':
                 workSpace.title_magnet = temp
                 continue
             print('[*]===============================================')
-            print(f"以下為 magnet 輸出:")
+            print(f"[*]以下為 magnet 輸出:")
             for title in workSpace.title_magnet:                
                 if workSpace.title_magnet[title] != "None":
                     print(workSpace.title_magnet[title])
