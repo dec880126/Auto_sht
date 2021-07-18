@@ -2,7 +2,6 @@ from os import system, remove, path
 from time import strftime, localtime
 from sys import exit
 from webbrowser import open_new
-import webbrowser
 from requests import get
 from bs4 import BeautifulSoup
 
@@ -74,27 +73,23 @@ if __name__ == '__main__':
         fourmList.append(Fourm())
         fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
         fourmList_index += 1    
-
+    # Check Version
+    if check_update(info['version']):
+        pass
+    else:
+        while True:
+            to_update = input(f"[?]是否要下載最新版本?(y/n):")
+            if to_update == 'y' or to_update == 'Y':
+                webbrowser.open_new('https://github.com/dec880126/Auto_sht/releases/')
+                exit()
+            elif to_update == 'n' or to_update == 'N':
+                break
+            else:
+                continue
     try:
         # Main Loop        
         while True:
             try:
-                clearConsole()
-                
-                # Check Version
-                if check_update(info['version']):
-                    pass
-                else:
-                    while True:
-                        to_update = input(f"[?]是否要下載最新版本?(y/n):")
-                        if to_update == 'y' or to_update == 'Y':
-                            webbrowser.open_new('https://github.com/dec880126/Auto_sht/releases/')
-                            exit()
-                        elif to_update == 'n' or to_update == 'N':
-                            break
-                        else:
-                            continue
-                        
                 print('[*]================== Auto_sht ===================')
                 print("[*]" + info['version'].center(46))
                 print("[*]")
@@ -316,6 +311,7 @@ if __name__ == '__main__':
                 system("pause")
                 continue
             finally:
+                clearConsole()
                 if typeChoose != 5:
                     continue
         remove_html_if_exist(fourmList)
