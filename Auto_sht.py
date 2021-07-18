@@ -1,11 +1,11 @@
-import os
-import time
-import webbrowser
+from os import system, remove
+from time import strftime, localtime
+from webbrowser import open_new_tab
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
-from tool_function import clearConsole, choose_type, changeDate, make_html
+from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.6.0"
+version = "3.7.0"
 
 class Fourm():
     def __init__(self):
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     fourmChoose_last = 0
 
     # Default Setting
-    today = str(time.strftime("%Y-%m-%d", time.localtime()))
+    today = str(strftime("%Y-%m-%d", localtime()))
 
     # Publish class
     fourmList_index = 0
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         if typeChoose < 1 or typeChoose > 5:
             print('[*]===============================================')
             print("[?]請重新輸入功能選單中之數字(1~5)...")
-            os.system("pause")
+            system("pause")
             continue
 
         # Change date
@@ -102,7 +102,7 @@ if __name__ == '__main__':
             except:
                 print(f"[*]資料庫中目前無資料")
                 print('[*]===============================================')
-            os.system("pause")
+            system("pause")
             continue
         
         if temp == 0:
@@ -161,7 +161,7 @@ if __name__ == '__main__':
             print('[*]===============================================')
 
             # Open HTML files with default browser
-            webbrowser.open_new_tab(workSpace.picture_path)
+            open_new_tab(workSpace.picture_path)
 
             temp = workSpace.title_magnet.copy()
 
@@ -172,23 +172,31 @@ if __name__ == '__main__':
             print('[*]===============================================')
             Num = 0
             for title in workSpace.title_magnet:
+                # """
+                # Save: Type any word
+                # Do not save: Just enter it
+                # Exit the progress: Enter "exit"
+                # """
                 Num += 1
                 if_save = input(f"[?]{Num}. {title}:   ")
                 if if_save == "":
-                    workSpace.title_magnet[title] = "None"
+                    workSpace.title_magnet[title] = None
                 elif if_save == "exit":
                     break
-            else:
-                temp = workSpace.title_magnet
+            else:                
+                temp = workSpace.title_magnet                
             if if_save == "exit":
                 workSpace.title_magnet = temp
                 continue
-            workSpace.title_magnet = temp
+
+            # workSpace.title_magnet = temp
             print('[*]===============================================')
             print(f"[*]以下為 magnet 輸出:")
-            for title in workSpace.title_magnet:                
-                if workSpace.title_magnet[title] != "None":
-                    print("[*]" + workSpace.title_magnet[title])
+            magnet_choosen = [x for x in workSpace.title_magnet.values() if x != None]
+            for magnet in magnet_choosen:
+                print(magnet)
+            Write_into_Clipboard(magnet_choosen)
+            print('[*]magnet 已複製至剪貼簿')
             print('[*]===============================================')
         elif extractChoose_mean == 'title':
             if len(workSpace.title) == 0:
@@ -213,11 +221,11 @@ if __name__ == '__main__':
         else:
             print("[*]請重新輸入功能...")
         
-        os.system("pause")
+        system("pause")
     
     try:
         # Remove the HTML files when program finished
-        os.remove(workSpace.picture_path)
+        remove(workSpace.picture_path)
     except:
         pass
     clearConsole()
