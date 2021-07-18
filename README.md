@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 3.8.2
+>Current version: ver 3.8.3
 
 ## 現行版本注意事項
 無
@@ -68,4 +68,5 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.7.0  |新增    |提取之 magnet 清單自動導入剪貼簿
 |ver 3.8.0  |新增    |選擇過程中如果按錯誤刪，現在提供返回修正機制
 |ver 3.8.1  |修正    |Bug fixes: 修正連續抓取失敗問題
-|ver 3.8.2  |優化    |Bug fixes: 程式報錯畫面優化
+|ver 3.8.2  |優化    |程式報錯畫面優化
+|ver 3.8.3  |修正    |Bug fixes: 修正返回機制崩潰問題
