@@ -1,7 +1,6 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 3.8.5
 
 ## 現行版本注意事項
 無
