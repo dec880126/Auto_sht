@@ -18,7 +18,7 @@ pip install pyperclip
 ## How to use?
 - By .exe
 	1. Click `Auto_sht.exe`
-	2. Runnung
+	2. Runnng
 	
 - By .bat
 	1. Download the latest release
