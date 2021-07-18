@@ -5,7 +5,7 @@ from webbrowser import open_new_tab
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.8.0"
+version = "3.8.1"
 
 class Fourm():
     def __init__(self):
