@@ -13,6 +13,7 @@ In addition to environment, the modules below are also necessary.
 pip install requests 
 pip install beautifulsoup4
 pip install datetime
+pip install pyperclip
 ```
 ## How to use?
 - By .exe
