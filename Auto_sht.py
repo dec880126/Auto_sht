@@ -23,7 +23,7 @@ if __name__ == '__main__':
     fourmList_Eng = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
     fourmList = []
     URL_List = [36, 37, 2, 38, 103]
-    today_set = False
+    # today_set = False
     '''
     URL_List
     0. 無碼: https://www.sehuatang.org/forum-36-1.html
@@ -135,17 +135,14 @@ if __name__ == '__main__':
             
             # Check if today_List for each fourm exist or not
             # make the list of article that published today
-            while not today_set:
-                if len(today_list[fourmChoose-1]) == 0:
-                    print(f"[*]{today} 的文章清單不存在!")
-                    today_list[fourmChoose-1] = get_today_article(home_code, today)
-                else:                
-                    today_set = True            
+            while not today_list[fourmChoose-1]:
+                print(f"[*]{today} 的 {str(fourmList_Chinese[fourmChoose-1])} 區 的文章清單不存在!")
+                today_list[fourmChoose-1] = get_today_article(str(fourmList_Chinese[fourmChoose-1]), home_code, today)
+
                 if not today_list[fourmChoose-1]:
                     print(f"[*]{today} 目前尚未有文章更新")
                     today = changeDate()
                     today_list[fourmChoose-1] = get_today_article(home_code, today)
-                    today_set = True
 
             workSpace = fourmList[fourmChoose-1]
             # start to extract
@@ -270,6 +267,7 @@ if __name__ == '__main__':
             else:
                 print("[*]請重新輸入功能...")
             
+            today_set = False
             system("pause")
         
         clearConsole()
