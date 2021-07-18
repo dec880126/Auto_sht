@@ -2,9 +2,6 @@
 
 To simplify the work for browsing sehuatang.org
 
-## 現行版本注意事項
-無
-
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
 In addition to environment, the modules below are also necessary.
