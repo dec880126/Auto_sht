@@ -1,7 +1,7 @@
 <h1 align="center">Auto SHT</h1>
 
 To simplify the work for browsing sehuatang.org
->Current version: ver 3.7.0
+>Current version: ver 3.8.0
 
 ## 現行版本注意事項
 已知有 Bug 存在(待修復)，在運行完一個區塊之後請重新開啟程式以抓取下一個區塊
@@ -66,5 +66,4 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.5.1  |修正    |解決當日無更新文章會崩潰的錯誤
 |ver 3.6.0  |優化    |1. HTML files 美化以及新增標題及 magnet 預覽功能<br>2. 連結至 sehuatang.org 之 link
 |ver 3.7.0  |新增    |提取之 magnet 清單自動導入剪貼簿
-
-
+|ver 3.8.0  |新增    |選擇過程中如果按錯誤刪，現在提供返修正機制
