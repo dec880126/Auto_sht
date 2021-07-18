@@ -5,7 +5,7 @@ from webbrowser import open_new_tab
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.8.1"
+version = "3.8.2"
 
 class Fourm():
     def __init__(self):
@@ -268,11 +268,9 @@ if __name__ == '__main__':
                 print("[*]請重新輸入功能...")
             
             today_set = False
+            remove(workSpace.picture_path)
             system("pause")
         
         clearConsole()
     except:
-        print("\n\n-*-*-*-*-[!]Error has happened, contact me with email: dec880126@icloud.com[!]-*-*-*-*-\n\n")
-    finally:
-        # Remove the HTML files when program finished
-        remove(workSpace.picture_path)
+        print("\n\n-*-*-*-*-[!]Error has happened, contact me with email: dec880126@icloud.com[!]-*-*-*-*-\n")
