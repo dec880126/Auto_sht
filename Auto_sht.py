@@ -5,7 +5,7 @@ from webbrowser import open_new_tab
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.8.2"
+version = "3.8.3"
 
 class Fourm():
     def __init__(self):
@@ -47,7 +47,8 @@ if __name__ == '__main__':
 
     try:
     # Main Loop
-        while True:
+    while True:
+        # try:
             clearConsole()
             
             print('[*]================== Auto_sht ===================')
@@ -199,7 +200,7 @@ if __name__ == '__main__':
                             # """
                             # Case: Do not save
                             # """
-                            title_List_history[Num-1] += "DO_NOT_SAVE"  # magnet .. ... .DO_NOT_SAVE
+                            workSpace.title_magnet[title_List_history[Num-1]] += "DO_NOT_SAVE"  # magnet .. ... .DO_NOT_SAVE
                         elif if_save == "exit":
                             # """
                             # Case: Exit - Stage I
@@ -209,7 +210,8 @@ if __name__ == '__main__':
                         # """
                         # Case: Save
                         # """
-                        if workSpace.title_magnet[title_List_history[Num-1]][-11:] == "DO_NOT_SAVE":
+                        check_if_save = str(workSpace.title_magnet[title_List_history[Num-1]])
+                        if check_if_save[-11:] == "DO_NOT_SAVE":
                             mag_temp = workSpace.title_magnet[title_List_history[Num-1]]
                             workSpace.title_magnet[title_List_history[Num-1]] = mag_temp.replace("DO_NOT_SAVE", "")
 
@@ -270,7 +272,11 @@ if __name__ == '__main__':
             today_set = False
             remove(workSpace.picture_path)
             system("pause")
-        
-        clearConsole()
+        # except:
+        #     system("pause")
+        # finally:
+        #     continue
+    
+    clearConsole()
     except:
         print("\n\n-*-*-*-*-[!]Error has happened, contact me with email: dec880126@icloud.com[!]-*-*-*-*-\n")
