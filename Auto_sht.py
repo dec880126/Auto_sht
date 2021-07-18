@@ -1,13 +1,17 @@
 from os import system, remove, path
 from time import strftime, localtime
+from sys import exit
 from webbrowser import open_new
+import webbrowser
+from requests import get
+from bs4 import BeautifulSoup
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
 info = {
     'author': 'CyuanHunag',
-    'version': '3.8.4',
+    'version': '3.8.5',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht',
     'Copyright': 'Copyright © 2021. Cyuan All rights reserved.',
@@ -30,8 +34,20 @@ def remove_html_if_exist(fourmList):
             remove(fourm.picture_path)
             print("[*]" + fourm.picture_path + "HTML files 已刪除")        
 
+def check_update(current_version):
+    print("[/]" + "檢查是否為最新版本中......".center(41))
+    url = 'https://github.com/dec880126/Auto_sht/releases/'
+    html = get(url)
+    soup = BeautifulSoup(html.text,"html.parser")
+    latest_version = soup.find("div", "f1 flex-auto min-width-0 text-normal").get_text().strip()
+    if current_version != latest_version:
+        print("[*]" + f"最新版本: {latest_version} 已經發布".center(41))
+        return False
+    else:
+        print("[*]" + "已經是最新版本".center(41))
+        return True
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     # Param
     fourmList_Chinese = ["無碼", "有碼", "國產", "歐美", "中文"]
     fourmList_Eng = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
@@ -57,7 +73,7 @@ if __name__ == '__main__':
     for fourm in fourmList_Eng:
         fourmList.append(Fourm())
         fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
-        fourmList_index += 1
+        fourmList_index += 1    
 
     try:
         # Main Loop        
@@ -65,11 +81,25 @@ if __name__ == '__main__':
             try:
                 clearConsole()
                 
+                # Check Version
+                if check_update(info['version']):
+                    pass
+                else:
+                    while True:
+                        to_update = input(f"[?]是否要下載最新版本?(y/n):")
+                        if to_update == 'y' or to_update == 'Y':
+                            webbrowser.open_new('https://github.com/dec880126/Auto_sht/releases/')
+                            exit()
+                        elif to_update == 'n' or to_update == 'N':
+                            break
+                        else:
+                            continue
+                        
                 print('[*]================== Auto_sht ===================')
                 print("[*]" + info['version'].center(46))
                 print("[*]")
-                print("[*]" + "↓ Follow the updates and Guides Here ↓".center(46))
-                print("[*]" + "https://github.com/dec880126/Auto_sht/releases".center(46))
+                print("[*]" + "↓ Follow the updates and Guides Here ↓".center(41))
+                print("[*]" + "https://github.com/dec880126/Auto_sht/releases".center(41))
                 print('[*]===============================================')
                 print("[*]" + "1. 開始抓取".center(41))
                 print("[*]" + "2. 修改日期".center(41))
