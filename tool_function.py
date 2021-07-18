@@ -2,6 +2,7 @@ import sys
 import time
 import os
 import datetime
+import pyperclip
 
 def progress_bar(progress_Now, over = False):# 1~101
     '''
@@ -108,3 +109,13 @@ def changeDate():
     date = input("[?]請問日期要更改為?:")
     if int(date) < 0 and int(date) > -4:
         return getYesterday(abs(int(date)))
+
+
+def Write_into_Clipboard(List):
+    # """
+    # Read the input List and write the List content into clipboard end with "\r\n"
+    # """
+    text_to_write = ""
+    for element in List:
+        text_to_write = text_to_write + element + '\r\n'
+    pyperclip.copy(text_to_write)
