@@ -80,7 +80,7 @@ if __name__ == '__main__':
         while True:
             to_update = input(f"[?]是否要下載最新版本?(y/n):")
             if to_update == 'y' or to_update == 'Y':
-                webbrowser.open_new('https://github.com/dec880126/Auto_sht/releases/')
+                open_new('https://github.com/dec880126/Auto_sht/releases/')
                 exit()
             elif to_update == 'n' or to_update == 'N':
                 break
@@ -93,8 +93,8 @@ if __name__ == '__main__':
                 print('[*]================== Auto_sht ===================')
                 print("[*]" + info['version'].center(46))
                 print("[*]")
-                print("[*]" + "↓ Follow the updates and Guides Here ↓".center(41))
-                print("[*]" + "https://github.com/dec880126/Auto_sht/releases".center(41))
+                print("[*]" + "↓ Official Site ↓".center(46))
+                print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))
                 print('[*]===============================================')
                 print("[*]" + "1. 開始抓取".center(41))
                 print("[*]" + "2. 修改日期".center(41))
