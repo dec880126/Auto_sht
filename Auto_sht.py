@@ -1,5 +1,4 @@
 from os import system, remove, path
-from sys import version
 from time import strftime, localtime
 from webbrowser import open_new
 
