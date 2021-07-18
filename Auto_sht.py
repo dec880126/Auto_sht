@@ -21,8 +21,7 @@ def remove_html_if_exist(fourmList):
     for fourm in fourmList:
         if path.isfile(fourm.picture_path):        
             remove(fourm.picture_path)
-            print("[*]" + fourm.picture_path + "HTML files 已刪除")
-        
+            print("[*]" + fourm.picture_path + "HTML files 已刪除")        
 
 
 if __name__ == '__main__':
@@ -33,7 +32,6 @@ if __name__ == '__main__':
     URL_List = [36, 37, 2, 38, 103]
     pic_link_List = [[], [], [], [], []]
 
-    # today_set = False
     '''
     URL_List
     0. 無碼: https://www.sehuatang.org/forum-36-1.html
@@ -276,9 +274,7 @@ if __name__ == '__main__':
                     
                     print('[*]===============================================')
                 else:
-                    print("[*]請重新輸入功能...")
-                
-                today_set = False                
+                    print("[*]請重新輸入功能...")                
             except:
                 system("pause")
                 continue
