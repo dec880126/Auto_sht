@@ -46,7 +46,7 @@ if __name__ == '__main__':
         fourmList_index += 1
 
     try:
-        # Main Loop
+        # Main Loop        
         while True:
             try:
                 clearConsole()
@@ -274,8 +274,10 @@ if __name__ == '__main__':
                 system("pause")
             except:
                 system("pause")
-            finally:
                 continue
+            finally:
+                if typeChoose != 5:
+                    continue
         
         clearConsole()
     except:
