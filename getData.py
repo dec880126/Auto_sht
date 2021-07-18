@@ -2,13 +2,12 @@ from tool_function import progress_bar, make_html
 import requests
 import bs4
 
-def get_today_article(home_code, today):
+def get_today_article(fourm, home_code, today):
     """
     To get the article published today
-
     rtype: list
     """
-    print(f"[/]{today} 的文章清單獲取中...")
+    print(f"[/]{today} 的 {str(fourm)} 區 的文章清單獲取中...")
 
     # list of "article code"
     today_list = []
@@ -43,7 +42,6 @@ def get_today_article(home_code, today):
 def get_title(today_list):
     """
     Read the article_Code and print all title that correspond to the parameter "today"
-
     type today_list: List (article_Code)
     rtype: List
     """
@@ -69,7 +67,6 @@ def get_title(today_list):
 def get_magnet(today_list):
     """
     Read the article_Code and print all magnet that correspond to the parameter "today"
-
     type today_list: List
     rtype: List
     """            
@@ -123,7 +120,6 @@ def get_pic_urlList(today_list):
 def get_ALL(today_list):
     """
     Get title, magnet and make HTML files of picture in one operation
-
     type today_list: List
     rtype: Dict
     """
