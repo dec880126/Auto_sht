@@ -1,11 +1,19 @@
 from os import system, remove, path
+from sys import version
 from time import strftime, localtime
 from webbrowser import open_new
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.8.4"
+info = {
+    'author': 'CyuanHunag',
+    'version': '3.8.4',
+    'email': 'dec880126@icloud.com',
+    'official site': 'https://github.com/dec880126/Auto_sht',
+    'Copyright': 'Copyright © 2021. Cyuan All rights reserved.',
+    'license': 'GPL-3.0 License'
+}
 
 class Fourm():
     def __init__(self):
@@ -59,17 +67,17 @@ if __name__ == '__main__':
                 clearConsole()
                 
                 print('[*]================== Auto_sht ===================')
-                print("[*]                    v" + version)
+                print("[*]" + info['version'].center(46))
                 print("[*]")
-                print("[*]    ↓ Follow the updates and Guides Here ↓")
-                print("[*]https://github.com/dec880126/Auto_sht/releases")
+                print("[*]" + "↓ Follow the updates and Guides Here ↓".center(46))
+                print("[*]" + "https://github.com/dec880126/Auto_sht/releases".center(46))
                 print('[*]===============================================')
-                print("[*]                 1. 開始抓取")
-                print("[*]                 2. 修改日期")
-                print("[*]                 3. 資料查詢")
-                print("[*]                 4. 重製資料")
-                print("[*]                 5. 結束程式")
-                print("[*]           隨時可按 Ctrl + C 回到此頁面")
+                print("[*]" + "1. 開始抓取".center(41))
+                print("[*]" + "2. 修改日期".center(41))
+                print("[*]" + "3. 資料查詢".center(41))
+                print("[*]" + "4. 重製資料".center(41))
+                print("[*]" + "5. 結束程式".center(41))
+                print("[*]" + "隨時可按 Ctrl + C 回到此頁面".center(41))
                 print('[*]===============================================')        
                 typeChoose = int(input("[?]請選擇功能(1~5):"))
 
@@ -285,4 +293,4 @@ if __name__ == '__main__':
         system("pause")
         clearConsole()
     except:
-        print("\n\n-*-*-*-*-[!]Error has happened, contact me with email: dec880126@icloud.com[!]-*-*-*-*-\n")
+        print(f"\n\n-*-*-*-*-[!]Error has happened, contact me with email: {info['email']}[!]-*-*-*-*-\n")
