@@ -4,7 +4,7 @@ To simplify the work for browsing sehuatang.org
 >Current version: ver 3.8.2
 
 ## 現行版本注意事項
-已知有 Bug 存在(待修復)，在運行完一個區塊之後請重新開啟程式以抓取下一個區塊
+無
 
 ## Necessary modules
 Of course ``Python environment`` is necessary.<br>
