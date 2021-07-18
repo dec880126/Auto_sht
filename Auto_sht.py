@@ -1,11 +1,11 @@
-from os import system, remove
+from os import system, remove, path
 from time import strftime, localtime
-from webbrowser import open_new_tab
+from webbrowser import open_new
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
 
-version = "3.8.3"
+version = "3.8.4"
 
 class Fourm():
     def __init__(self):
@@ -17,12 +17,22 @@ class Fourm():
         self.fileName = "請先運行圖片抓取模式"
 
 
+def remove_html_if_exist(fourmList):
+    for fourm in fourmList:
+        if path.isfile(fourm.picture_path):        
+            remove(fourm.picture_path)
+            print("[*]" + fourm.picture_path + "HTML files 已刪除")
+        
+
+
 if __name__ == '__main__':
     # Param
     fourmList_Chinese = ["無碼", "有碼", "國產", "歐美", "中文"]
     fourmList_Eng = [["WM"], ["YM"], ["GC"], ["OM"], ["JW"]]
     fourmList = []
     URL_List = [36, 37, 2, 38, 103]
+    pic_link_List = [[], [], [], [], []]
+
     # today_set = False
     '''
     URL_List
@@ -33,7 +43,6 @@ if __name__ == '__main__':
     4. 中文: https://www.sehuatang.org/forum-103-1.html
     '''
     today_list = [[], [], [], [], []]
-    fourmChoose_last = 0
 
     # Default Setting
     today = str(strftime("%Y-%m-%d", localtime()))
@@ -62,6 +71,7 @@ if __name__ == '__main__':
                 print("[*]                 3. 資料查詢")
                 print("[*]                 4. 重製資料")
                 print("[*]                 5. 結束程式")
+                print("[*]           隨時可按 Ctrl + C 回到此頁面")
                 print('[*]===============================================')        
                 typeChoose = int(input("[?]請選擇功能(1~5):"))
 
@@ -91,7 +101,6 @@ if __name__ == '__main__':
                 """
                 fourmList = [WM, YM, GC, OM, JW] <- every element is object Fourm
                 """
-                temp = 0
                 if typeChoose == 3:      
                     try:                
                         fourm_search = choose_type()
@@ -107,8 +116,7 @@ if __name__ == '__main__':
                     system("pause")
                     continue
                 
-                if temp == 0:
-                    fourmChoose = choose_type()
+                fourmChoose = choose_type()
                 
                 # while True:     
                 #     extractChoose = input("[?]選擇要抓取的種類(標題:t, 磁力:m, 圖片:p, 挑選:c):")
@@ -150,9 +158,10 @@ if __name__ == '__main__':
                 if extractChoose_mean == 'choose':
                     # Ensure Data exist
                     if len(workSpace.title_magnet) == 0:
-                        workSpace.title_magnet, pic_link_List = get_ALL(today_list[fourmChoose-1])
+                        workSpace.title_magnet, pic_link_List[fourmChoose-1] = get_ALL(today_list[fourmChoose-1])
 
-                    workSpace.picture_path, workSpace.fileName = make_html(input_list=pic_link_List, fileName="Auto_SHT_Pic.html", \
+                    # Make HTML files
+                    workSpace.picture_path, workSpace.fileName = make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
                         titleList=[title for title in workSpace.title_magnet.keys()], \
                         magnetList=[magnet for magnet in workSpace.title_magnet.values()], \
                         article_Code_List=today_list[fourmChoose-1])
@@ -160,7 +169,7 @@ if __name__ == '__main__':
                     print('[*]===============================================')
 
                     # Open HTML files with default browser
-                    open_new_tab(workSpace.picture_path)
+                    open_new(workSpace.picture_path)
 
                     temp = workSpace.title_magnet.copy()
 
@@ -269,16 +278,15 @@ if __name__ == '__main__':
                 else:
                     print("[*]請重新輸入功能...")
                 
-                today_set = False
-                remove(workSpace.picture_path)
-                system("pause")
+                today_set = False                
             except:
                 system("pause")
                 continue
             finally:
                 if typeChoose != 5:
                     continue
-        
+        remove_html_if_exist(fourmList)
+        system("pause")
         clearConsole()
     except:
         print("\n\n-*-*-*-*-[!]Error has happened, contact me with email: dec880126@icloud.com[!]-*-*-*-*-\n")
