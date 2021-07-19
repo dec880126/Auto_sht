@@ -4,6 +4,7 @@ from sys import exit
 from webbrowser import open_new
 from requests import get
 from bs4 import BeautifulSoup
+from getpass import getpass
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
@@ -11,7 +12,7 @@ import Synology_Web_API
 
 info = {
     'author': 'CyuanHunag',
-    'version': '4.0.0',
+    'version': '4.0.1',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht',
     'Copyright': 'Copyright © 2021. Cyuan All rights reserved.',
@@ -109,7 +110,7 @@ if __name__ == '__main__':
                 print("[*]               6. 結束程式")
                 print("[*]          隨時可按 Ctrl + C 回到此頁面")
                 print('[*]===============================================')        
-                typeChoose = int(input("[?]請選擇功能(1~5):"))
+                typeChoose = int(input("[?]請選擇功能(1~6):"))
 
                 # Finish
                 if typeChoose == 6:
@@ -135,7 +136,7 @@ if __name__ == '__main__':
                             PORT = input('[?]Port:(預設5000)')
                             SECURE = False
                             USER = input('[?]Synology NAS 帳號:')
-                            PASSWORD = input('[?]Synology NAS 密碼:')
+                            PASSWORD =  getpass('[?]Synology NAS 密碼:')
                             break
                         elif SETTING_SYNOLOGY == 2:
                             auto_upload_to_synology = False
