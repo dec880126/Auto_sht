@@ -70,3 +70,5 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.8.5  |新增    |自動檢查更新功能
 |ver 3.8.6  |修正    |Bug fixes: 修正 magnet 顯示錯誤問題
 |ver 3.8.7  |優化    |提升進度條準確性
+|ver 4.0.0  |新增    |串接 Synology API 系統，可實現自動加入任務至 Download Station
+
