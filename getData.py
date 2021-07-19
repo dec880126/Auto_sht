@@ -132,7 +132,7 @@ def get_ALL(today_list):
 
     for article_Code in today_list:
         article_Num += 1
-        progress_bar(int(article_Num/30*99))
+        progress_bar(int(article_Num/len(today_list)*99))
         response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
         bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
 
