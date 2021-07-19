@@ -69,5 +69,4 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.8.4  |優化    |HTML files 產生邏輯與 HTML files 刪除機制優化
 |ver 3.8.5  |新增    |自動檢查更新功能
 |ver 3.8.6  |修正    |Bug fixes: 修正 magnet 顯示錯誤問題
-
-
+|ver 3.8.7  |優化    |提升進度條準確性
