@@ -11,26 +11,6 @@ pip install beautifulsoup4
 pip install datetime
 pip install pyperclip
 ```
-## How to use?
-- By .exe
-	1. Click `Auto_sht.exe`
-	2. Running
-	
-- By .bat
-	1. Download the latest release
-	2. UNZIP
-	3. click the `auto_sht.bat`
-
-- By Python Compiler
-> Windows User<br>
-	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is<br>
-	2. type the command `python .\auto_sht.py`<br>
-	
-PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
-
-> Mac OS User<br>
-	1. Open the Terminal at the folder where `auto_sht.py` is<br>
-	2. type the command `python .\auto_sht.py`
 
 ## Development Notes
 
@@ -71,4 +51,25 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 |ver 3.8.6  |修正    |Bug fixes: 修正 magnet 顯示錯誤問題
 |ver 3.8.7  |優化    |提升進度條準確性
 |ver 4.0.0  |新增    |串接 Synology API 系統，可實現自動加入任務至 Download Station
+
+## How to use?
+- By .exe
+	1. Click `Auto_sht.exe`
+	2. Running
+	
+- By .bat
+	1. Download the latest release
+	2. UNZIP
+	3. click the `auto_sht.bat`
+
+- By Python Compiler
+> Windows User<br>
+	1. Open the cmd.exe or Windows PowerShell at the folder where `auto_sht.py` is<br>
+	2. type the command `python .\auto_sht.py`<br>
+	
+PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
+
+> Mac OS User<br>
+	1. Open the Terminal at the folder where `auto_sht.py` is<br>
+	2. type the command `python .\auto_sht.py`
 
