@@ -74,12 +74,9 @@ if __name__ == '__main__':
         fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
         fourmList_index += 1    
     # Check Version
-    print('[*]================== Auto_sht ===================')
-    print("[*]" + info['version'].center(46))
-    print("[*]")
-    print("[*]" + "↓ Official Site ↓".center(46))
-    print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))    
-    print('[*]================== 版本確認 ====================')
+    current_version_show = "目前版本:" + info['version']
+    print('[*]============== Auto_sht 版本確認 ===============')
+    print("[*]" + current_version_show.center(41))
     if check_update(info['version']):
         pass
     else:
@@ -96,6 +93,11 @@ if __name__ == '__main__':
         # Main Loop        
         while True:
             try:
+                print('[*]================== Auto_sht ===================')
+                print("[*]" + info['version'].center(46))
+                print("[*]")
+                print("[*]" + "↓ Official Site ↓".center(46))
+                print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))   
                 print('[*]===============================================')         
                 print("[*]" + "1. 開始抓取".center(41))
                 print("[*]" + "2. 修改日期".center(41))
@@ -311,15 +313,9 @@ if __name__ == '__main__':
                 else:
                     print("[*]請重新輸入功能...")                
             except:
-                system("pause")
                 continue
             finally:
-                system("pause")
                 clearConsole()
-                if typeChoose != 5:
-                    continue
         remove_html_if_exist(fourmList)
-        system("pause")
-        clearConsole()
     except:
         print(f"\n\n-*-*-*-*-[!]Error has happened, contact me with email: {info['email']}[!]-*-*-*-*-\n")
