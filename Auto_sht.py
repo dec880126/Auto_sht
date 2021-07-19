@@ -10,7 +10,7 @@ from tool_function import clearConsole, choose_type, changeDate, make_html, Writ
 
 info = {
     'author': 'CyuanHunag',
-    'version': '3.8.5',
+    'version': '3.8.7',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht',
     'Copyright': 'Copyright © 2021. Cyuan All rights reserved.',
@@ -74,6 +74,12 @@ if __name__ == '__main__':
         fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
         fourmList_index += 1    
     # Check Version
+    print('[*]================== Auto_sht ===================')
+    print("[*]" + info['version'].center(46))
+    print("[*]")
+    print("[*]" + "↓ Official Site ↓".center(46))
+    print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))    
+    print('[*]================== 版本確認 ====================')
     if check_update(info['version']):
         pass
     else:
@@ -90,12 +96,7 @@ if __name__ == '__main__':
         # Main Loop        
         while True:
             try:
-                print('[*]================== Auto_sht ===================')
-                print("[*]" + info['version'].center(46))
-                print("[*]")
-                print("[*]" + "↓ Official Site ↓".center(46))
-                print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))
-                print('[*]===============================================')
+                print('[*]===============================================')         
                 print("[*]" + "1. 開始抓取".center(41))
                 print("[*]" + "2. 修改日期".center(41))
                 print("[*]" + "3. 資料查詢".center(41))
@@ -137,9 +138,11 @@ if __name__ == '__main__':
 
                         if len(fourmList[fourm_search-1].title_magnet) == 0:
                             raise BaseException()
+                        search_result_Number = 0
                         for title, magnet in fourmList[fourm_search-1].title_magnet.items():
-                            if magnet != "None":
-                                print(f'[*] {title} : {magnet}')                    
+                            if magnet[-11:] != "DO_NOT_SAVE":
+                                search_result_Number += 1
+                                print(f'[*]{search_result_Number}. {title} :\n[*]{magnet}')                    
                     except:
                         print(f"[*]資料庫中目前無資料")
                         print('[*]===============================================')
@@ -311,6 +314,7 @@ if __name__ == '__main__':
                 system("pause")
                 continue
             finally:
+                system("pause")
                 clearConsole()
                 if typeChoose != 5:
                     continue
