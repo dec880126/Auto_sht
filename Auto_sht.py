@@ -7,10 +7,11 @@ from bs4 import BeautifulSoup
 
 from getData import get_title, get_magnet, get_pic_urlList, get_today_article, get_ALL
 from tool_function import clearConsole, choose_type, changeDate, make_html, Write_into_Clipboard
+import Synology_Web_API
 
 info = {
     'author': 'CyuanHunag',
-    'version': '3.8.7',
+    'version': '4.0.0',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht',
     'Copyright': 'Copyright © 2021. Cyuan All rights reserved.',
@@ -53,6 +54,7 @@ if __name__ == '__main__':
     fourmList = []
     URL_List = [36, 37, 2, 38, 103]
     pic_link_List = [[], [], [], [], []]
+    auto_upload_to_synology = False
 
     '''
     URL_List
@@ -99,19 +101,49 @@ if __name__ == '__main__':
                 print("[*]" + "↓ Official Site ↓".center(46))
                 print("[*]" + "https://github.com/dec880126/Auto_sht".center(46))   
                 print('[*]===============================================')         
-                print("[*]" + "1. 開始抓取".center(41))
-                print("[*]" + "2. 修改日期".center(41))
-                print("[*]" + "3. 資料查詢".center(41))
-                print("[*]" + "4. 重製資料".center(41))
-                print("[*]" + "5. 結束程式".center(41))
-                print("[*]" + "隨時可按 Ctrl + C 回到此頁面".center(41))
+                print("[*]               1. 開始抓取")
+                print("[*]               2. 修改日期")
+                print("[*]               3. 資料查詢")
+                print("[*]               4. 重製資料")
+                print("[*]               5. Synology設定")
+                print("[*]               6. 結束程式")
+                print("[*]          隨時可按 Ctrl + C 回到此頁面")
                 print('[*]===============================================')        
                 typeChoose = int(input("[?]請選擇功能(1~5):"))
 
                 # Finish
-                if typeChoose == 5:
+                if typeChoose == 6:
                     break
-
+                
+                # Set Synology parameters
+                if typeChoose == 5:
+                    """
+                    IP = '192.168.0.183'
+                    PORT = 5000
+                    SECURE = False
+                    USER = ''
+                    PASSWORD = ''
+                    """
+                    while True:
+                        print("[*]               1. 開啟或修改設定")
+                        print("[*]               2. 關閉")
+                        print('[*]===============================================')
+                        SETTING_SYNOLOGY = int(input("[?]選擇要執行的動作:"))
+                        if SETTING_SYNOLOGY == 1:
+                            auto_upload_to_synology = True
+                            IP = input("[?]Synology NAS　IP:(ex:192.168.1.100)\n")
+                            PORT = input('[?]Port:(預設5000)')
+                            SECURE = False
+                            USER = input('[?]Synology NAS 帳號:')
+                            PASSWORD = input('[?]Synology NAS 密碼:')
+                            break
+                        elif SETTING_SYNOLOGY == 2:
+                            auto_upload_to_synology = False
+                            system('pause')
+                            break
+                        else:
+                            continue
+                    continue
                 # Reset Data
                 if typeChoose == 4:
                     reset_index = choose_type()
@@ -119,7 +151,7 @@ if __name__ == '__main__':
                     continue
                 
                 # To ensure typeChoose in the list
-                if typeChoose < 1 or typeChoose > 5:
+                if typeChoose < 1 or typeChoose > 6:
                     print('[*]===============================================')
                     print("[?]請重新輸入功能選單中之數字(1~5)...")
                     system("pause")
@@ -285,6 +317,12 @@ if __name__ == '__main__':
                     print(f"[*]以下為 magnet 輸出:")
                     magnet_choosen = [x for x in workSpace.title_magnet.values() if x[-11:] != "DO_NOT_SAVE"]
 
+                    if auto_upload_to_synology:
+                        ds = Synology_Web_API.SynologyDownloadStation(ip=IP, port=PORT, secure=SECURE)
+                        ds.login(USER, PASSWORD)
+                        for magnet_to_download in magnet_choosen:
+                            ds.uploadTorrent(magnet_to_download, '/monko/bt_download')
+
                     for magnet in magnet_choosen:
                         print(magnet)
                     Write_into_Clipboard(magnet_choosen)
@@ -315,6 +353,7 @@ if __name__ == '__main__':
             except:
                 continue
             finally:
+                system('pause')
                 clearConsole()
         remove_html_if_exist(fourmList)
     except:
