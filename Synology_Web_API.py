@@ -35,7 +35,7 @@ class SynologyDiskStation(object):
         self.api_base_url = urljoin(self.base_url, self.name+'/')
         
     def login(self, ac='admin', pw=''):
-        print(f'Account: {ac}')
+        print(f'[*]Synology 帳號: {ac}')
         pw = getpass.getpass() if not pw else pw
         self.auth_params['account'] = ac
         self.auth_params['passwd'] = pw
@@ -51,7 +51,7 @@ class SynologyDiskStation(object):
                 ).json()
         if r_json['success']:
             self.sid = r_json['data']['sid']
-            logging.info('Login {ss} Success.'.format(ss=self.name))
+            logging.info(f'Synology {self.name} 連線成功')
             logging.debug('Session {ss} ID: {sid}'.format(
                 ss=self.name, sid=self.sid))
         else:
