@@ -52,6 +52,7 @@ pip install pyperclip
 |ver 3.8.7  |優化    |提升進度條準確性
 |ver 4.0.0  |新增    |串接 Synology API 系統，可實現自動加入任務至 Download Station
 |ver 4.0.1  |優化    |可在輸入 Synology 密碼時畫面隱藏
+|ver 4.1.0  |更改    |增加整體程式碼可讀性
 
 
 ## How to use?
