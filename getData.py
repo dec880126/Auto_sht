@@ -157,3 +157,4 @@ def get_ALL(today_list):
             print(f"    無 magnet 請開啟連結: " + "https://www.sehuatang.org/thread-" + article_Code_error + "-1-1.html" + "  確認...")    
 
     return dict(zip(title_List, magnet_List)), pic_link_List
+
