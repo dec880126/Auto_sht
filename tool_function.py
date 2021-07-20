@@ -119,3 +119,4 @@ def Write_into_Clipboard(List):
     for element in List:
         text_to_write = text_to_write + element + '\r\n'
     pyperclip.copy(text_to_write)
+   
