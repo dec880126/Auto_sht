@@ -9,10 +9,11 @@ import getpass
 import getData
 import tool_function
 import Synology_Web_API
+import config
 
 info = {
     'author': 'CyuanHunag',
-    'version': '4.1.0',
+    'version': '4.2.0',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht'
 }
@@ -94,7 +95,7 @@ def Synology_setting():
     USER = ''
     PASSWORD = ''
     """    
-    global synology_info
+    global syno_info
 
     while True:
         print("[*]               1. 開啟或修改設定")
@@ -103,15 +104,15 @@ def Synology_setting():
         SETTING_SYNOLOGY = int(input("[?]選擇要執行的動作:"))
         try:
             if SETTING_SYNOLOGY == 1:
-                synology_info['upload'] = True
-                synology_info['IP'] = input("[?]Synology NAS　IP:(ex:192.168.1.100)\n")
-                synology_info['PORT'] = input('[?]Port:(預設5000)')
-                synology_info['SECURE'] = False
-                synology_info['USER'] = input('[?]Synology NAS 帳號:')
-                synology_info['PASSWORD'] =  getpass.getpass('[?]Synology NAS 密碼:')
+                syno_info['upload'] = True
+                syno_info['IP'] = input("[?]Synology NAS　IP:(ex:192.168.1.100)\n")
+                syno_info['PORT'] = input('[?]Port:(預設5000)')
+                syno_info['SECURE'] = False
+                syno_info['USER'] = input('[?]Synology NAS 帳號:')
+                syno_info['PASSWORD'] =  getpass.getpass('[?]Synology NAS 密碼:')
                 break
             elif SETTING_SYNOLOGY == 2:
-                synology_info['upload'] = False
+                syno_info['upload'] = False
                 os.system('pause')
                 break
         except ValueError:
@@ -264,11 +265,12 @@ def extract():
     print(f"[*]以下為 magnet 輸出:")
     magnet_choosen = [x for x in workSpace.title_magnet.values() if x[-11:] != "DO_NOT_SAVE"]
 
-    if synology_info['upload']:
-        ds = Synology_Web_API.SynologyDownloadStation(ip=synology_info['IP'], port=synology_info['PORT'], secure=synology_info['SECURE'])
-        ds.login(synology_info['USER'], synology_info['PASSWORD'])
+    # Synology Web API
+    if syno_info['upload']:
+        ds = Synology_Web_API.SynologyDownloadStation(ip=syno_info['IP'], port=syno_info['PORT'], secure=syno_info['SECURE'])
+        ds.login(syno_info['USER'], syno_info['PASSWORD'])
         for magnet_to_download in magnet_choosen:
-            ds.uploadTorrent(magnet_to_download, '/monko/bt_download')
+            ds.uploadTorrent(magnet_to_download, syno_info['PATH'])
 
     for magnet in magnet_choosen:
         print(magnet)
@@ -284,25 +286,18 @@ def exit_Auto_sht():
     remove_html_if_exist(fourmList)
     raise Endding 
 
+
 # ================== Dictionary ==================
-synology_info = {
-    'upload': False,
-    'IP': '',
-    'PORT': '',
-    'SECURE': '',
-    'USER': '',
-    'PASSWORD': ''
-}
-synology_info['upload'] = False # Default
 
 functionDefined = {
     '1': extract,
     '2': edit_date,
     '3': history_search,
     '4': reset_data,
-    '5': Synology_setting,
+    # '5': Synology_setting,
     'EXIT': exit_Auto_sht
 }
+
 # ============== End of Dictionary ==============
 
 
@@ -331,6 +326,14 @@ if __name__ == '__main__':
             else:
                 continue
     
+    #  Load config    
+    if config.check_config_if_exist(file_name = "config.ini"):
+        syno_info = config.load_config()
+    else:
+        print("[!]若為初次運行 Auto_sht ，請先至檔案目錄下配置 config.ini")
+        config.make_config("./config.ini")
+        os.system('pause')
+        sys.exit()
 
     # Main Loop        
     while True:
@@ -344,11 +347,10 @@ if __name__ == '__main__':
         print("[*]               2. 修改日期")
         print("[*]               3. 資料查詢")
         print("[*]               4. 重製資料")
-        print("[*]               5. Synology設定")
         print("[*]               EXIT. 結束程式")
         print("[*]          隨時可按 Ctrl + C 回到此頁面")
         print('[*]===============================================')        
-        functionChoose = input("[?]請選擇功能(1~6):")
+        functionChoose = input(f"[?]請選擇功能(1~{len(functionDefined)-1}):")
 
         if functionChoose == 'exit':
             functionChoose = 'EXIT'
@@ -368,5 +370,6 @@ if __name__ == '__main__':
             continue
         finally:
             os.system('pause')
+            
             # 結束每階段任務後清除 Console
             tool_function.clearConsole()
