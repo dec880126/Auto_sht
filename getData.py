@@ -1,11 +1,13 @@
 from tool_function import progress_bar, make_html
 import requests
 import bs4
+import number_parser
 
 def get_today_article(fourm, home_code, today):
     """
     To get the article published today
-    rtype: list
+    type fourm, home_code, today: str
+    rtype: list <- today list
     """
     print(f"[/]{today} 的 {str(fourm)} 區 的文章清單獲取中...")
 
@@ -117,7 +119,7 @@ def get_pic_urlList(today_list):
     return path, fileName
 
 
-def get_ALL(today_list):
+def get_ALL(today_list, fourmType):
     """
     Get title, magnet and make HTML files of picture in one operation
     type today_list: List
@@ -137,8 +139,14 @@ def get_ALL(today_list):
         bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
 
         try:
-            magnet_List.append(bs_pages.find('div','blockcode').get_text().removesuffix('复制代码'))
-            title_List.append(bs_pages.find('span', attrs={'id' : 'thread_subject'}).get_text())            
+            title = bs_pages.find('span', attrs={'id' : 'thread_subject'}).get_text()
+
+            # 於有碼區自動挑除素人系列
+            if number_parser.is_shirouto(title) and fourmType == '有碼':
+                continue
+
+            title_List.append(title)
+            magnet_List.append(bs_pages.find('div','blockcode').get_text().removesuffix('复制代码'))                        
             img_block = bs_pages.find_all('ignore_js_op')
             pic_link_List.append("Head of Page")
             for block in img_block[:-1]:
@@ -158,3 +166,47 @@ def get_ALL(today_list):
 
     return dict(zip(title_List, magnet_List)), pic_link_List
 
+
+
+
+# today_list = get_today_article('have碼', '37', '2021-07-18')
+
+# today_list = [
+#     '560232', '560230', '560229', '560228', '560227', '560225', '560224', 
+#     '560222', '560221', '560220', '560211', '560203', '560193', '560187', 
+#     '560182', '560181', '560040', '560039', '560038', '560036', '560034', 
+#     '560033', '560032', '560031', '560026', '560023'
+# ]
+
+# titleList = get_title(today_list)
+
+# titleList = [
+#     'madv-510 後ろからデカチン即ズボっ密着洗体大原理央', 
+#     'katu-085 乳首びんびんどすけべスナックママ 爆乳痴女', 
+#     'gnax-057 夫には絶対見せられない白昼の絶叫熟練巨乳妻彩奈リナ', 
+#     'genm-087 極・摂精の天才 深田えいみ', 
+#     'genm-086 低身長Gカップ！思わず持ち上げたくなる美少女 新條ひな', 
+#     'genm-085 誘惑SEX激ピストン！-誘った男がガチ腰振り- 高杉麻里', 
+#     'enki-039 日米変態合戦勃発！青い目の性欲モンスタージ', 
+#     'daya-016 個人撮影 巨 乳の変態淫語オバサマと濃厚ドスケベプレイ 滝川恵理', 
+#     'bhg-039 誘惑する 発情期シスターず', 
+#     'avsa-174 池袋Tube ほろ酔いでブクロをフラフラ歩い', 
+#     'apns-250 悲劇の山岳部女教師輩達からの輪僚教師に種付けされた私.宮崎リン', 
+#     'apns-249 堕とされた美人弁護士 平井栞奈', 
+#     'apkh-182 淫乱絶頂 ・愛人ラブホテル 変態したくて疼美波こづえ', 
+#     'apkh-181 裏取引・巨乳女性社員 淫乱枕営業セックス温泉旅高敷るあ', 
+#     'apak-196 先生とラブホに来ちゃった... 体操部前乃菜々', 
+#     'agav-059 最高尻～19歳の94センチ超デカ美尻女子が降臨～ 琴羽みおな', 
+#     '413INST-140 幼児体形のつるぺたギャルももかちゃん 裏垢', 
+#     '345SIMM-654 現役J○の美尻に元担任が激ピス！元気いっぱ', 
+#     '421OCN-023 理沙ちゃん', '421OCN-022 ゆうこちゃん', 
+#     '421OCN-021 ま いちゃん', '083PPP-2190 整体師の俺がお義母さんのきわどい部分をマッ', 
+#     '083PPP-2189 交際している四十路女の連れ子(女子大生)が過', 
+#     '083PPP-2188 モザイク無し！美女20人の本気イキオナニー全', 
+#     '083PPP-2187 発情20連発！ごく普通の人妻から淫乱熟女まで', 
+#     '083PPP-2186 やりすぎヤリマン伝説～一般女性のとんでもSEX'
+# ]
+
+# for t in titleList:
+#     if not number_parser.is_shirouto(t):
+#         print(t)
