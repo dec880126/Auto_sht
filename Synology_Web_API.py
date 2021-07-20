@@ -108,3 +108,5 @@ class SynologyFileStation(SynologyDiskStation):
         r_json = requests.get(
             self.entry_url, params=self.entry_params).json()
         logging.info('Create Folder Success?: {b}'.format(b=r_json['success']))
+
+        
