@@ -13,7 +13,7 @@ import config
 
 info = {
     'author': 'CyuanHunag',
-    'version': '4.2.0',
+    'version': '4.3.0',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht'
 }
@@ -174,7 +174,7 @@ def extract():
     # start to extract
     # Ensure Data exist
     if len(workSpace.title_magnet) == 0:
-        workSpace.title_magnet, pic_link_List[fourmChoose-1] = getData.get_ALL(today_list[fourmChoose-1])
+        workSpace.title_magnet, pic_link_List[fourmChoose-1] = getData.get_ALL(today_list[fourmChoose-1], fourmList_Chinese[fourmChoose-1])
 
     # Make HTML files
     workSpace.picture_path, workSpace.fileName = tool_function.make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
