@@ -2,15 +2,21 @@
 
 To simplify the work for browsing sehuatang.org
 
-## Necessary modules
-Of course ``Python environment`` is necessary.<br>
-In addition to environment, the modules below are also necessary.
-```
-pip install requests 
-pip install beautifulsoup4
-pip install datetime
-pip install pyperclip
-```
+## Config.ini 配置方法
+### upload
+> 若要開啟 Synology 自動上傳，將 upload 設為1 否則為0 <br>
+### IP
+> Synology NAS 之 IP<br>
+### PORT
+> Synology NAS 之 PORT<br>
+### PATH
+> BT 下載之路徑<br>
+### SECURE
+> 加密傳輸，預設是在區網內使用為0，否則為1<br>
+### USER
+> Synology NAS 之 Account<br>
+### PASSWORD
+> Synology NAS 之 Password<br>
 
 ## Development Notes
 
