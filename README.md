@@ -60,6 +60,7 @@ To simplify the work for browsing sehuatang.org
 |ver 4.0.1  |優化    |可在輸入 Synology 密碼時畫面隱藏
 |ver 4.1.0  |更改    |增加整體程式碼可讀性
 |ver 4.2.0  |新增    |config.ini配置檔案
+|ver 4.3.0  |新增    |有碼區自動挑除素人系列功能
 
 ## How to use?
 - By .exe
