@@ -403,9 +403,30 @@ if __name__ == '__main__':
 
         try:
             # 根據所選擇之功能開始作業
+            # """
+            # '1': extract,
+            # '2': edit_date,
+            # '3': history_search,
+            # '4': reset_data,            
+            # """
             Auto_sht_function(functionChoose)
         except Endding:
-            print("系統發生錯誤 將回到主選單...")            
+            # """
+            # 'EXIT': exit_Auto_sht
+            # """
+            print("\n程式結束...")
+            pass
+        except KeyboardInterrupt:
+            # """
+            # 輸入 Ctrl + C 的狀況
+            # """
+            print('\n[*]===============================================')
+            print("[!]將回到主選單...")
+            continue
+        except ValueError:
+            print('\n[*]===============================================')
+            print('[!]ValueError')
+            print("[!]將回到主選單...")
             continue
         finally:
             os.system('pause')
