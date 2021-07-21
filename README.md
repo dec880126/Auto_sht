@@ -62,6 +62,7 @@
 ## Config.ini 配置方法
 ### upload
 > 若要開啟 Synology 自動上傳，將 upload 設為1 否則為0 <br>
+> 設為 0 的話下面的參數都可以忽略
 ### IP
 > Synology NAS 之 IP<br>
 ### PORT
