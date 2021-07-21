@@ -5,6 +5,7 @@ import webbrowser
 import requests
 import bs4
 import getpass
+import concurrent.futures
 
 import getData
 import tool_function
@@ -13,7 +14,7 @@ import config
 
 info = {
     'author': 'CyuanHunag',
-    'version': '4.3.0',
+    'version': '5.0.0',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht'
 }
@@ -154,51 +155,81 @@ def extract():
     # Fourm Choose
     fourmChoose = tool_function.choose_type()        
     home_code = URL_List[fourmChoose-1]
-    extractChoose_mean = 'choose'
     print('[*]===============================================')
-    print("[*]以下為 " + str(today) + " " + str(fourmList_Chinese[fourmChoose-1]) + " 區的 " + extractChoose_mean + " :")
+    print("[*]以下為 " + str(today) + " " + str(fourmList_Chinese[fourmChoose-1]) + " 區的挑選作業:")
 
     # Check if today_List for each fourm exist or not
     # make the list of article that published today
+
+    pages = [pageNum for pageNum in range(1, 10)]
+    fourmtype = str(fourmList_Chinese[fourmChoose-1])
+    fourms = [fourmtype]*len(pages)
+    homeCodes = [home_code]*len(pages)
+    todays = [today]*len(pages)    
+
     while not today_list[fourmChoose-1]:
-        print(f"[*]{today} 的 {str(fourmList_Chinese[fourmChoose-1])} 區 的文章清單不存在!")
-        today_list[fourmChoose-1] = getData.get_today_article(str(fourmList_Chinese[fourmChoose-1]), home_code, today)
+        print(f"[*]{today} 的 {fourmtype} 區 的文章清單不存在!")
+        print(f"[/]{today} 的 {fourmtype} 區 的文章清單獲取中...")
+        start_time = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
+        end_time = time.time()        
+        today_list[fourmChoose-1] = getData.get_todays()
 
         if not today_list[fourmChoose-1]:
             print(f"[*]{today} 目前尚未有文章更新")
-            today = tool_function.changeDate()
-            today_list[fourmChoose-1] = getData.get_today_article(home_code, today)
-
+            today = tool_function.changeDate()       
+            start_time = time.time()     
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+                executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
+            end_time = time.time()
+            today_list[fourmChoose-1] = getData.get_todays()
+    
+    print("[!]抓取完成")
+    print(f"[*]一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
     workSpace = fourmList[fourmChoose-1]
 
     # start to extract
     # Ensure Data exist
     if len(workSpace.title_magnet) == 0:
-        workSpace.title_magnet, pic_link_List[fourmChoose-1] = getData.get_ALL(today_list[fourmChoose-1], fourmList_Chinese[fourmChoose-1])
+        print(f'[*]開始抓取 {today} 的 {fourmtype} 區 的文章')
+        start_time = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            executor.map(getData.get_ALL, today_list[fourmChoose-1], [fourmtype for i in range(len(today_list[fourmChoose-1]))])
+        end_time = time.time()
+        print("[!]抓取完成")
+        print(f"[*]一共花了 {end_time - start_time:2.2f} 秒爬取 {len(today_list[fourmChoose-1])} 篇文章")
+        
+        workSpace.title_magnet = getData.get_titles_magnets()
+        pic_link_List[fourmChoose-1] = getData.get_picLinkList()
+
+    title_List = [str(x) for x in workSpace.title_magnet.keys()] 
+    if fourmtype == '有碼':
+            print(f'[*]一共排除了 {len(today_list[fourmChoose-1]) - len(title_List)} 篇素人文章，並保留了 {len(today_list[fourmChoose-1])} 篇文章')
 
     # Make HTML files
     workSpace.picture_path, workSpace.fileName = tool_function.make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
         titleList=[title for title in workSpace.title_magnet.keys()], \
         magnetList=[magnet for magnet in workSpace.title_magnet.values()], \
         article_Code_List=today_list[fourmChoose-1])
-        
-    print('[*]===============================================')
 
     # Open HTML files with default browser
     webbrowser.open_new(workSpace.picture_path)
 
     temp = workSpace.title_magnet.copy()
+    
+    Num = 0
+    # title_List = [str(x) for x in workSpace.title_magnet.keys()]            
+    title_List_history = ["尚未放棄任何選擇"]
+    title_List_history.extend(title_List)
 
     # Start working for choose movie
+    print('[*]===============================================')
     print("[*]以下為挑選作業的規則說明:")
     print("[*]如果要保留請隨意輸入(不要空白即可)，並按下 Enter 送出")
     print("[*]如果要捨棄，直接按下 Enter 送出即可捨棄")
     print("[*]如果誤刪了，可以輸入: -1，來返回操作")
     print('[*]===============================================')
-    Num = 0
-    title_List = [str(x) for x in workSpace.title_magnet.keys()]            
-    title_List_history = ["尚未放棄任何選擇"]
-    title_List_history.extend(title_List)
 
     for title in title_List:
         # """
