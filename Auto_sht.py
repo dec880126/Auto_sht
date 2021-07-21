@@ -14,7 +14,7 @@ import config
 
 info = {
     'author': 'CyuanHunag',
-    'version': '5.0.1',
+    'version': '5.0.2',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht'
 }
@@ -67,11 +67,12 @@ def default():
     print('請重新選擇功能')
 
 
-def remove_html_if_exist(fourmList):
-    for fourm in fourmList:
-        if os.path.isfile(fourm.picture_path):        
-            os.remove(fourm.picture_path)
-            print("[*]" + fourm.picture_path + "HTML files 已刪除")        
+def remove_html_if_exist():
+    for fourm in fourmList_Chinese:
+        path_HTML = './' + 'Auto_SHT_Pic_' + fourm + '.html'
+        if os.path.isfile(path_HTML):        
+            os.remove(path_HTML)
+            print("[*]" + path_HTML + " -> HTML files 已刪除")        
 
 
 def check_update(current_version):
@@ -321,7 +322,7 @@ def exit_Auto_sht():
     """
     刪除 HTML files 並關閉程式
     """
-    remove_html_if_exist(fourmList)
+    remove_html_if_exist()
     raise Endding 
 
 
