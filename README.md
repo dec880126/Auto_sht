@@ -61,6 +61,7 @@ To simplify the work for browsing sehuatang.org
 |ver 4.1.0  |更改    |增加整體程式碼可讀性
 |ver 4.2.0  |新增    |config.ini配置檔案
 |ver 4.3.0  |新增    |有碼區自動挑除素人系列功能
+|ver 5.0.0  |架構更動|使用多執行緒 (Multi-Threading) 來執行抓取作業，大幅提升了作業效率
 
 ## How to use?
 - By .exe
