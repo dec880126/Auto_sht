@@ -3,7 +3,10 @@
 高速瀏覽並抓取 sehuatang.org 的 magnet 之解決方案 by Python3<br>
 ## Single-Threading 與 Multi-Threading 之效能比較
 圖為於v5.0.0 版本更動中加入之 Multi-Threading 與舊版之 Single-Threading 之效能比較
-整體速度平均提升了約 **5.2** 倍
+整體速度平均提升了約 **5.2** 倍<br>
+> 縱軸為抓取所花費之時間<br>
+> 橫軸為抓取之文章數量<br>
+
 ![1626855450079](https://user-images.githubusercontent.com/34447298/126466711-6dc99eb8-0894-4342-8079-d1ad9a1a2e96.jpg)
 
 ## Development Notes
