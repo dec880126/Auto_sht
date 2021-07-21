@@ -59,7 +59,8 @@ def make_html(input_list, fileName, titleList, magnetList, article_Code_List):
         elif url == "Head of Page":
             f.write(f"""\t\t\t<h2><a href="{article_URL}"  target="_blank">{title}</a></h2>\n""")
         else:
-            f.write("\t\t\t\t<img src = " + str(url) + """ width=auto""" + """ height=auto loading="lazy"  class="center">\n""")
+            # 可擴充: loading="lazy"
+            f.write("\t\t\t\t<img src = " + str(url) + """ width=auto""" + """ height=auto class="center">\n""")
 
     f.write("""\t\t\t<a>Copyright © 2021.</a><a href = "https://github.com/dec880126" target="_blank">Cyuan</a><a>&nbsp&nbspAll rights reserved. </a>\n\t\t</div>\n\t</body>\n</html>""")
     f.close()
@@ -69,21 +70,30 @@ def make_html(input_list, fileName, titleList, magnetList, article_Code_List):
     return path, fileName
 
 
-def clearConsole():
+def clearConsole() -> None:
     command = 'clear'
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
     os.system(command)
 
 
-def getYesterday(how_many_day_pre): 
+def getYesterday(how_many_day_pre) -> datetime: 
+    """
+    Get date you want by input parameter
+    type how_many_day_pre: int
+    rtype: datetime
+    """
     today=datetime.date.today() 
     oneday=datetime.timedelta(days=how_many_day_pre) 
     yesterday=today-oneday  
     return yesterday
 
 
-def choose_type():
+def choose_type() -> int:
+    """
+    Print board of type, and allow user to make a decision
+    rtype: int
+    """
     typeList_Chinese = ["無碼", "有碼", "國產", "歐美", "中文"]
     print('[*]===============================================') 
     print("[*]                 1. 無碼")
@@ -100,7 +110,11 @@ def choose_type():
             return typeChoose
 
 
-def changeDate():
+def changeDate() -> datetime:
+    """
+    In this function can input the days you want to change
+    rtype: datetime
+    """
     print('[*]===============================================')
     today = str(time.strftime("%Y-%m-%d", time.localtime()))
     print(f"[*]今天是 {today}")
@@ -111,7 +125,7 @@ def changeDate():
         return getYesterday(abs(int(date)))
 
 
-def Write_into_Clipboard(List):
+def Write_into_Clipboard(List) -> None:
     # """
     # Read the input List and write the List content into clipboard end with "\r\n"
     # """
@@ -119,4 +133,3 @@ def Write_into_Clipboard(List):
     for element in List:
         text_to_write = text_to_write + element + '\r\n'
     pyperclip.copy(text_to_write)
-   
