@@ -1,22 +1,10 @@
 <h1 align="center">Auto SHT</h1>
 
-To simplify the work for browsing sehuatang.org
-
-## Config.ini 配置方法
-### upload
-> 若要開啟 Synology 自動上傳，將 upload 設為1 否則為0 <br>
-### IP
-> Synology NAS 之 IP<br>
-### PORT
-> Synology NAS 之 PORT<br>
-### PATH
-> BT 下載之路徑<br>
-### SECURE
-> 加密傳輸，預設是在區網內使用為0，否則為1<br>
-### USER
-> Synology NAS 之 Account<br>
-### PASSWORD
-> Synology NAS 之 Password<br>
+高速瀏覽並抓取 sehuatang.org 的 magnet 之解決方案 by Python3<br>
+## Single-Threading 與 Multi-Threading 之效能比較
+圖為於v5.0.0 版本更動中加入之 Multi-Threading 與舊版之 Single-Threading 之效能比較
+整體速度平均提升了約 **5.2** 倍
+![1626855450079](https://user-images.githubusercontent.com/34447298/126466711-6dc99eb8-0894-4342-8079-d1ad9a1a2e96.jpg)
 
 ## Development Notes
 
@@ -62,6 +50,22 @@ To simplify the work for browsing sehuatang.org
 |ver 4.2.0  |新增    |config.ini配置檔案
 |ver 4.3.0  |新增    |有碼區自動挑除素人系列功能
 |ver 5.0.0  |架構更動|使用多執行緒 (Multi-Threading) 來執行抓取作業，大幅提升了作業效率
+
+## Config.ini 配置方法
+### upload
+> 若要開啟 Synology 自動上傳，將 upload 設為1 否則為0 <br>
+### IP
+> Synology NAS 之 IP<br>
+### PORT
+> Synology NAS 之 PORT<br>
+### PATH
+> BT 下載之路徑<br>
+### SECURE
+> 加密傳輸，預設是在區網內使用為0，否則為1<br>
+### USER
+> Synology NAS 之 Account<br>
+### PASSWORD
+> Synology NAS 之 Password<br>
 
 ## How to use?
 - By .exe
