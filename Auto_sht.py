@@ -168,6 +168,7 @@ def extract():
     todays = [today]*len(pages)    
 
     while not today_list[fourmChoose-1]:
+        getData.initial_param()
         print(f"[*]{today} 的 {fourmtype} 區 的文章清單不存在!")
         print(f"[/]{today} 的 {fourmtype} 區 的文章清單獲取中...")
         start_time = time.time()
@@ -205,7 +206,7 @@ def extract():
 
     title_List = [str(x) for x in workSpace.title_magnet.keys()] 
     if fourmtype == '有碼':
-            print(f'[*]一共排除了 {len(today_list[fourmChoose-1]) - len(title_List)} 篇素人文章，並保留了 {len(today_list[fourmChoose-1])} 篇文章')
+            print(f'[*]一共排除了 {len(today_list[fourmChoose-1]) - len(title_List)} 篇素人文章，並保留了 {len(title_List)} 篇文章')
 
     # Make HTML files
     workSpace.picture_path, workSpace.fileName = tool_function.make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
@@ -292,22 +293,28 @@ def extract():
         workSpace.title_magnet = temp
 
     # workSpace.title_magnet = temp
-    print('[*]===============================================')
-    print(f"[*]以下為 magnet 輸出:")
+
     magnet_choosen = [x for x in workSpace.title_magnet.values() if x[-11:] != "DO_NOT_SAVE"]
 
-    # Synology Web API
-    if syno_info['upload']:
-        ds = Synology_Web_API.SynologyDownloadStation(ip=syno_info['IP'], port=syno_info['PORT'], secure=syno_info['SECURE'])
-        ds.login(syno_info['USER'], syno_info['PASSWORD'])
-        for magnet_to_download in magnet_choosen:
-            ds.uploadTorrent(magnet_to_download, syno_info['PATH'])
+    # 有選取magnet才會執行輸出
+    if magnet_choosen:
+        print('[*]===============================================')
+        print(f"[*]以下為 magnet 輸出:")    
 
-    for magnet in magnet_choosen:
-        print(magnet)
-    tool_function.Write_into_Clipboard(magnet_choosen)
-    print('[*]magnet 已複製至剪貼簿')
-    print('[*]===============================================')
+        # Synology Web API
+        if syno_info['upload']:
+            ds = Synology_Web_API.SynologyDownloadStation(ip=syno_info['IP'], port=syno_info['PORT'], secure=syno_info['SECURE'])
+            ds.login(syno_info['USER'], syno_info['PASSWORD'])
+            for magnet_to_download in magnet_choosen:
+                ds.uploadTorrent(magnet_to_download, syno_info['PATH'])
+
+        for magnet in magnet_choosen:
+            print(magnet)
+        tool_function.Write_into_Clipboard(magnet_choosen)
+        print('[*]magnet 已複製至剪貼簿')
+        print('[*]===============================================')
+    else:
+        print('[!]無選取任何 magnet')
 
 
 def exit_Auto_sht():
