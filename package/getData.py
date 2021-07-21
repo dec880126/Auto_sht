@@ -1,9 +1,8 @@
-from tool_function import progress_bar, make_html
+from package.tool_function import progress_bar, make_html
 import requests
 import bs4
-import number_parser
+import package.number_parser as number_parser
 
-title_List = []
 magnet_List = []
 pic_link_List = []
 magnet_error_List = []
@@ -11,6 +10,7 @@ article_Code_error_List = []
 article_Num = 0
 title_magnet = {}
 today_list = []
+title_List = []
 
 def get_today_article(fourm, home_code, today, pageNum):
     """
@@ -23,6 +23,7 @@ def get_today_article(fourm, home_code, today, pageNum):
     """
     global today_list        
 
+    # progress_bar(len(today_list), over=False)
     # for url_pageNum_of_home in range(1, 6):
     # choose home_code
     url_home = "https://www.sehuatang.org/forum-" + str(home_code) + "-" + str(pageNum) + ".html"        
@@ -63,7 +64,7 @@ def get_title(article_Code):
     bs_article = bs4.BeautifulSoup(response_of_article.text,"html.parser")
 
     title = bs_article.find('span', attrs={'id' : 'thread_subject'}).get_text()
-    title_list.append(title)
+    title_List.append(title)
     # progress_bar(100, over = True)
 
     # print("[*]Title 已提取完畢" + "一共抓取了" + str(titleNum) + "個 title")
@@ -130,6 +131,8 @@ def initial_param():
     global pic_link_List
     global magnet_error_List
     global article_Code_error_List
+    global title_magnet
+    global today_list
 
     title_List = []
     magnet_List = []
@@ -137,6 +140,8 @@ def initial_param():
     magnet_error_List = []
     article_Code_error_List = []
     article_Num = 0
+    title_magnet = {}
+    today_list = []
 
 
 def get_ALL(article_Code, fourmType):
@@ -152,7 +157,7 @@ def get_ALL(article_Code, fourmType):
     global magnet_error_List
     global article_Code_error_List
     global title_magnet
-
+    
     article_Num += 1
     response_of_pages = requests.get("https://www.sehuatang.org/thread-" + article_Code + "-1-1.html")
     bs_pages = bs4.BeautifulSoup(response_of_pages.text,"html.parser")
