@@ -7,14 +7,14 @@ import bs4
 import getpass
 import concurrent.futures
 
-import getData
-import tool_function
-import Synology_Web_API
-import config
+import package.getData as getData
+import package.tool_function as tool_function
+import package.Synology_Web_API as Synology_Web_API
+import package.config as config
 
 info = {
     'author': 'CyuanHunag',
-    'version': '5.0.3',
+    'version': '5.0.4',
     'email': 'dec880126@icloud.com',
     'official site': 'https://github.com/dec880126/Auto_sht'
 }
