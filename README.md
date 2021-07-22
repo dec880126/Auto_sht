@@ -57,7 +57,7 @@
 |ver 5.0.2  |優化    |優化 HTML files 刪除邏輯
 |ver 5.0.3  |優化    |優化主程式之強制中斷流程
 |ver 5.0.4  |優化    |取消 HTML files 圖片之loading="lazy" 設定，以提升 HTML files 之讀取性能
-
+|ver 5.0.4  |修正    |修正無文章更新情況下，選擇日期後抓取失敗的Bug
 
 ## Config.ini 配置方法
 ### upload
