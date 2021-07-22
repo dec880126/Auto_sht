@@ -180,7 +180,8 @@ def extract():
 
         if not today_list[fourmChoose-1]:
             print(f"[*]{today} 目前尚未有文章更新")
-            today = tool_function.changeDate()       
+            today = tool_function.changeDate()
+            todays = [today]*len(pages)     
             start_time = time.time()     
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
                 executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
@@ -189,6 +190,8 @@ def extract():
     
     print("[!]抓取完成")
     print(f"[*]一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
+
+    # --------------------------------------------工作區開始--------------------------------------------
     workSpace = fourmList[fourmChoose-1]
 
     # start to extract
@@ -296,6 +299,8 @@ def extract():
     # workSpace.title_magnet = temp
 
     magnet_choosen = [x for x in workSpace.title_magnet.values() if x[-11:] != "DO_NOT_SAVE"]
+
+    # --------------------------------------------工作區結束--------------------------------------------
 
     # 有選取magnet才會執行輸出
     if magnet_choosen:
