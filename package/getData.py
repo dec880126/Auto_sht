@@ -12,14 +12,10 @@ title_magnet = {}
 today_list = []
 title_List = []
 
-def get_today_article(fourm, home_code, today, pageNum):
+def get_today_article(home_code, today, pageNum) -> None:
     """
     To get the article published today
-    type fourm: str
-    type home_code: str
-    type today: str
-    type pageNum: int
-    rtype: list <- today list
+    type home_code, today, pageNum: str
     """
     global today_list        
 
@@ -125,6 +121,9 @@ def get_pic_urlList(today_list):
 
 
 def initial_param():
+    """
+    Reset all global parameters
+    """
     global article_Num
     global title_List
     global magnet_List
@@ -144,11 +143,10 @@ def initial_param():
     today_list = []
 
 
-def get_ALL(article_Code, fourmType):
+def get_ALL(article_Code, fourmType) -> None:
     """
     Get title, magnet and make HTML files of picture in one operation
-    type today_list: List
-    rtype: Dict
+    type article_Code, fourmType: Str
     """
     global article_Num
     global title_List
@@ -205,4 +203,3 @@ def get_picLinkList() -> list:
 def get_todays() -> list:
     global today_list
     return today_list
-
