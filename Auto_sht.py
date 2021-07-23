@@ -186,10 +186,10 @@ def extract():
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
                 executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
             end_time = time.time()
-            today_list[fourmChoose-1] = getData.get_todays()
-    
-    print("[!]抓取完成")
-    print(f"[*]一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
+            today_list[fourmChoose-1] = getData.get_todays()    
+        print(f"[!]抓取完成 -> 一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
+    else:
+        print(f'[!]{today} 的 {fourmtype} 區 的文章清單已存在!')
 
     # --------------------------------------------工作區開始--------------------------------------------
     workSpace = fourmList[fourmChoose-1]
@@ -202,8 +202,7 @@ def extract():
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
             executor.map(getData.get_ALL, today_list[fourmChoose-1], [fourmtype for i in range(len(today_list[fourmChoose-1]))])
         end_time = time.time()
-        print("[!]抓取完成")
-        print(f"[*]一共花了 {end_time - start_time:2.2f} 秒爬取 {len(today_list[fourmChoose-1])} 篇文章")
+        print(f"[!]抓取完成 -> 一共花了 {end_time - start_time:2.2f} 秒爬取 {len(today_list[fourmChoose-1])} 篇文章")
         
         workSpace.title_magnet = getData.get_titles_magnets()
         pic_link_List[fourmChoose-1] = getData.get_picLinkList()
@@ -213,10 +212,13 @@ def extract():
             print(f'[*]一共排除了 {len(today_list[fourmChoose-1]) - len(title_List)} 篇素人文章，並保留了 {len(title_List)} 篇文章')
 
     # Make HTML files
-    workSpace.picture_path, workSpace.fileName = tool_function.make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
-        titleList=[title for title in workSpace.title_magnet.keys()], \
-        magnetList=[magnet for magnet in workSpace.title_magnet.values()], \
-        article_Code_List=today_list[fourmChoose-1])
+    if not workSpace.picture_path:
+        workSpace.picture_path, workSpace.fileName = tool_function.make_html(input_list=pic_link_List[fourmChoose-1], fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose-1] + ".html", \
+            titleList=[title for title in workSpace.title_magnet.keys()], \
+            magnetList=[magnet for magnet in workSpace.title_magnet.values()], \
+            article_Code_List=today_list[fourmChoose-1])
+    else:
+        print(f'[!]{workSpace.fileName} 已存在 -> 系統將自動開啟檔案...')
 
     # Open HTML files with default browser
     webbrowser.open_new(workSpace.picture_path)
@@ -229,7 +231,6 @@ def extract():
     title_List_history.extend(title_List)
 
     # Start working for choose movie
-    print('[*]===============================================')
     print("[*]以下為挑選作業的規則說明:")
     print("[*]如果要保留請隨意輸入(不要空白即可)，並按下 Enter 送出")
     print("[*]如果要捨棄，直接按下 Enter 送出即可捨棄")
