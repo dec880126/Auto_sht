@@ -66,7 +66,7 @@ def make_html(input_list, fileName, titleList, magnetList, article_Code_List):
     f.close()
     path = f"{os.getcwd()}\{path[2:]}"
     
-    print(f"[*]{fileName} 產生成功! -> 檔案路徑: {path}")
+    print(f"[*]{fileName} 產生成功! -> 檔案路徑: {path} 系統將自動開啟檔案...")
     return path, fileName
 
 
