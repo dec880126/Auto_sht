@@ -174,7 +174,7 @@ def extract():
         print(f"[/]{today} 的 {fourmtype} 區 的文章清單獲取中...")
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
+            executor.map(getData.get_today_article, homeCodes, todays, pages)
         end_time = time.time()        
         today_list[fourmChoose-1] = getData.get_todays()
 
@@ -184,7 +184,7 @@ def extract():
             todays = [today]*len(pages)     
             start_time = time.time()     
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-                executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
+                executor.map(getData.get_today_article, homeCodes, todays, pages)
             end_time = time.time()
             today_list[fourmChoose-1] = getData.get_todays()    
         print(f"[!]抓取完成 -> 一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
