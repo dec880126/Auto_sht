@@ -1,6 +1,13 @@
 <h1 align="center">Auto SHT</h1>
 
 高速瀏覽並抓取 sehuatang.org 的 magnet 之解決方案 by Python<br>
+
+## Demo
+Working             |  Output with Synology Web API
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/34447298/126899928-cca8e587-d996-4419-b9da-0e357e4deaef.gif)  |  ![](https://user-images.githubusercontent.com/34447298/126899975-76b06156-bf5c-4a9e-b45e-b1fa95648d93.jpg)
+
+
 ## Single-Threading 與 Multi-Threading 之效能比較
 圖為於v5.0.0 版本更動中加入之 Multi-Threading 與舊版之 Single-Threading 之效能比較
 整體速度平均提升了約 **5.2** 倍<br>
