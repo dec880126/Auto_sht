@@ -104,3 +104,5 @@ PS: Recommend using **Windows PowerShell** rather then **CMD.exe**
 	1. Open the Terminal at the folder where `auto_sht.py` is<br>
 	2. type the command `python .\auto_sht.py`
 
+## Caution
+Only for educational purpose.
