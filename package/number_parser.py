@@ -1,7 +1,8 @@
 import re
 
+
 def is_shirouto(title):
-    number_from_shirouto = re.compile(r'\d+\D+-\d+')
+    number_from_shirouto = re.compile(r"\d+\D+-\d+")
     # number_from_studio = re.compile(r'\D+-\d+')
 
     try:
