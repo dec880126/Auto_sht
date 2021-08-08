@@ -182,7 +182,7 @@ def extract():
         print(f"[/]{today} 的 {fourmtype} 區 的文章清單獲取中...")
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            executor.map(getData.get_today_article, homeCodes, todays, pages)
+            executor.map(getData.get_today_article, fourms, homeCodes, todays, pages)
         end_time = time.time()
         today_list[fourmChoose - 1] = getData.get_todays()
 
@@ -192,14 +192,14 @@ def extract():
             todays = [today] * len(pages)
             start_time = time.time()
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-                executor.map(getData.get_today_article, homeCodes, todays, pages)
+                executor.map(
+                    getData.get_today_article, fourms, homeCodes, todays, pages
+                )
             end_time = time.time()
             today_list[fourmChoose - 1] = getData.get_todays()
-        print(
-            f"[!]抓取完成 -> 一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單"
-        )
-    else:
-        print(f"[!]{today} 的 {fourmtype} 區 的文章清單已存在!")
+
+    print("[!]抓取完成")
+    print(f"[*]一共花了 {end_time - start_time:2.2f} 秒來抓取 {today} 的 {fourmtype} 區 的文章清單")
 
     # --------------------------------------------工作區開始--------------------------------------------
     workSpace = fourmList[fourmChoose - 1]
@@ -216,8 +216,9 @@ def extract():
                 [fourmtype for i in range(len(today_list[fourmChoose - 1]))],
             )
         end_time = time.time()
+        print("[!]抓取完成")
         print(
-            f"[!]抓取完成 -> 一共花了 {end_time - start_time:2.2f} 秒爬取 {len(today_list[fourmChoose-1])} 篇文章"
+            f"[*]一共花了 {end_time - start_time:2.2f} 秒爬取 {len(today_list[fourmChoose-1])} 篇文章"
         )
 
         workSpace.title_magnet = getData.get_titles_magnets()
@@ -230,16 +231,13 @@ def extract():
         )
 
     # Make HTML files
-    if not workSpace.picture_path:
-        workSpace.picture_path, workSpace.fileName = tool_function.make_html(
-            input_list=pic_link_List[fourmChoose - 1],
-            fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose - 1] + ".html",
-            titleList=[title for title in workSpace.title_magnet.keys()],
-            magnetList=[magnet for magnet in workSpace.title_magnet.values()],
-            article_Code_List=today_list[fourmChoose - 1],
-        )
-    else:
-        print(f"[!]{workSpace.fileName} 已存在 -> 系統將自動開啟檔案...")
+    workSpace.picture_path, workSpace.fileName = tool_function.make_html(
+        input_list=pic_link_List[fourmChoose - 1],
+        fileName="Auto_SHT_Pic_" + fourmList_Chinese[fourmChoose - 1] + ".html",
+        titleList=[title for title in workSpace.title_magnet.keys()],
+        magnetList=[magnet for magnet in workSpace.title_magnet.values()],
+        article_Code_List=today_list[fourmChoose - 1],
+    )
 
     # Open HTML files with default browser
     webbrowser.open_new(workSpace.picture_path)
@@ -252,6 +250,7 @@ def extract():
     title_List_history.extend(title_List)
 
     # Start working for choose movie
+    print("[*]===============================================")
     print("[*]以下為挑選作業的規則說明:")
     print("[*]如果要保留請隨意輸入(不要空白即可)，並按下 Enter 送出")
     print("[*]如果要捨棄，直接按下 Enter 送出即可捨棄")
@@ -379,25 +378,21 @@ functionDefined = {
 
 if __name__ == "__main__":
     # Publish class
-    fourmList_index = 0
-    for fourm in fourmList_Eng:
+    for fourmList_index, _ in enumerate(fourmList_Eng):
         fourmList.append(Fourm())
         fourmList[fourmList_index].type = fourmList_Chinese[fourmList_index]
-        fourmList_index += 1
 
     # Check Version
     current_version_show = "目前版本:" + info["version"]
     print("[*]============== Auto_sht 版本確認 ===============")
     print("[*]" + current_version_show.center(41))
-    if check_update(info["version"]):
-        pass
-    else:
+    if not check_update(info["version"]):
         while True:
             to_update = input(f"[?]是否要下載最新版本?(y/n):")
-            if to_update == "y" or to_update == "Y":
+            if to_update in ["y", "Y"]:
                 webbrowser.open_new("https://github.com/dec880126/Auto_sht/releases/")
                 exit()
-            elif to_update == "n" or to_update == "N":
+            elif to_update in ["n", "N"]:
                 break
             else:
                 continue
@@ -452,7 +447,6 @@ if __name__ == "__main__":
             # 'EXIT': exit_Auto_sht
             # """
             print("\n程式結束...")
-            pass
         except KeyboardInterrupt:
             # """
             # 輸入 Ctrl + C 的狀況
