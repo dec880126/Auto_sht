@@ -3,7 +3,8 @@
 高速瀏覽並抓取 sehuatang.org 的 magnet 之解決方案 by Python<br>
 ## 注意事項
 
-2021.08.14更新 開啟 Synology API 功能需留意是否開啟 DSM 7.0 之二階段認證登入功能，如有開啟此功能將無法正常上傳任務，目前認定為 Synology 官方API之問題，暫時無碼排除。
+2021.08.14更新<br>
+開啟 **Synology API 功能**需留意是否開啟 **DSM 7.0 之二階段認證登入**功能，如有開啟此功能將無法正常上傳任務，目前認定為 Synology 官方API之問題，暫時無法排除。
 
 ## Demo
 Working             |  Output with Synology Web API
