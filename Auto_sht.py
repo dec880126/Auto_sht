@@ -338,6 +338,8 @@ def extract():
 
         # Synology Web API
         if syno_info["upload"]:
+            print("[!]注意: DSM 7.0 使用者請留意使否開啟二階段認證登入")
+            print("[!]注意: 如有開啟請關閉後才能正常使用 Synology API 功能")
             ds = Synology_Web_API.SynologyDownloadStation(
                 ip=syno_info["IP"], port=syno_info["PORT"], secure=syno_info["SECURE"]
             )
